@@ -1,6 +1,11 @@
 from SYM import SYM
 from NUM import NUM
 from lib import rnd
+from main import main
+egs = {}
+def eg(key,str,func):
+    egs[key] = func
+    main.help = main.help + "  -g  %s\t%s\n" + key + str
 
 def eg_sym():
     sym = SYM()
