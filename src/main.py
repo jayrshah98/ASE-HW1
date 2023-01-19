@@ -2,7 +2,7 @@ class main:
     the = {
     'dump': False,
     'go': all,
-    'help': false,
+    'help': False,
     'seed': 937162211,
 }
     help = """script.lua : an example script with help text and a test suite
