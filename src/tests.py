@@ -41,6 +41,9 @@ def eg_rand():
         num2.add(rand(0,1))
     m1 = rnd(num1.mid(),10)
     m2 = rnd(num2.mid(),10)
+    #print("m1",m1)
+    #print("m2",m2)
+    #print("rnd val",rnd(m1,1))
     res = m1==m2 and 0.5==rnd(m1,1)
     print("✅ pass:	rand" if res == True else "X fail:	rand")
     return res
