@@ -1,5 +1,9 @@
 class main:
-    the = {}
+    the = {
+    'dump': False,
+    'go': None,
+    'seed': 937162211,
+}
     help = """script.lua : an example script with help text and a test suite
     (c)2022, Tim Menzies <timm@ieee.org>, BSD-2 
     USAGE:   script.lua  [OPTIONS] [-g ACTION]

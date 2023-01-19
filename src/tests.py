@@ -47,7 +47,9 @@ def eg_rand():
     res = m1==m2 and 0.5==rnd(m1,1)
     print("✅ pass:	rand" if res == True else "X fail:	rand")
     return res
-
+def eg_the():
+    print(str(main.the))
 eg_sym()
 eg_num()
+eg_the()
 eg_rand()
