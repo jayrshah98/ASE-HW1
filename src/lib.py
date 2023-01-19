@@ -1,13 +1,11 @@
 # import module
 # NUM = module.NUM()
 
-from src import NUM
 import math
 import random
 
-seed = 937162211 
-lo = NUM.lo
-hi = NUM.hi
+lo = float('inf') 
+hi = float('-inf')
 
 class LIB:
 
@@ -18,11 +16,12 @@ class LIB:
         return math.floor(0.5 + random.Random(lo,hi))
 
     def rand(self, lo, hi):
+        seed = 937162211 
         if lo != 0:
             lo = lo
         else:
-            NUM. lo = 0
-        
+            lo = 0
+
         if hi != 1:
             hi = hi
         else:
@@ -30,10 +29,9 @@ class LIB:
         seed = (16807 * seed) % 2147483647 
         return lo + (hi-lo) * seed / 2147483647
 
-    def rnd(self, n,nPlaces):
+    def rnd(self, n, nPlaces = 3):
         mult = 10**(nPlaces or 3)
         return math.floor(n * mult + 0.5) / mult    
-
 
     ### Lists
     def map(self, t, fun, u):
@@ -46,7 +44,6 @@ class LIB:
                 u[len(u)+1] = v
 
 
-
     def kap(self, t, fun,u):
         u={}
         for k,v in t.items():
@@ -56,14 +53,13 @@ class LIB:
             else:
                 u[len(u)+1] =  v
 
-
-
+    
     def sort(self,t,fun):
         sorted(t,fun)
         
     #return sorted list of keys from the the table
     def keys(self, t):
-        self.sort(t, lambda k:k )
+        self.sort(t, lambda x,y : x)
         
     # def keys(t):
     # return sort(kap(t, def(k,_) return k end))
@@ -73,9 +69,14 @@ class LIB:
 
     # def fmt()
 
-    def o(t, isKeys, fun):
+    def o(self, t, isKeys, fun):
         if type(t) != dict or type(t) != list:
             return str(t)
+        def fun(k, v):
+            if not str(k):
+                return print(": %s %s", self.o(k), self.o(v))
+        
+        return 
 
         # if type(t)~="table" then return tostring(t) end
         # fun= function(k,v) if not tostring(k):find"^_" then return fmt(":%s %s",o(k),o(v)) end end
