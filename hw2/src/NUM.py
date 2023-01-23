@@ -1,12 +1,14 @@
 class NUM:
-    def __init__(self) -> None:
+    def __init__(self,at=0,txt="")
+        self.at = at
+        self.txt = txt
         self.n = 0
         self.mu = 0
         self.m2 = 0
         self.lo = float('inf') 
         self.hi = float('-inf')
 
-    def add(self, n):
+    def add(self, n, d):
         if n != 0:
             self.n = self.n + 1
             d = n - self.mu
@@ -21,4 +23,6 @@ class NUM:
     def div(self):
         return 0 if (self.m2 < 0 or self.n < 2) else (self.m2/(self.n-1))**0.5
     
-    
+    # def rnd(self, x, n):
+    #     Mathf.round
+
