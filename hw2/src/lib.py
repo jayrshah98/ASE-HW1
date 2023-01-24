@@ -1,5 +1,6 @@
 import math
 import random
+import re
 
 lo = float('inf') 
 hi = float('-inf')
@@ -21,3 +22,24 @@ class LIB:
     def rnd(self, n, nPlaces = 3):
         mult = 10**(nPlaces)
         return math.floor(n * mult + 0.5) / mult   
+
+    def coerce(self,s):
+        def fun(s1):
+            if s1 == "true" or s1 == "True":
+                return True
+            elif s1 == "false" or s1 == "False":
+                return False
+            else:
+                return s1
+        if type(s) == bool:
+            return s
+        try:
+            res = int(s)
+        except:
+            try:
+                res = float(s)
+            except:
+                res = fun(re.match("^\s*(.+)\s*$", s).string)
+        return res
+
+            
