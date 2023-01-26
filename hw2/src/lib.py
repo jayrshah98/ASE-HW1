@@ -1,6 +1,7 @@
 import math
 import random
 import re
+from pathlib import Path
 
 lo = float('inf') 
 hi = float('-inf')
@@ -34,12 +35,23 @@ class LIB:
         if type(s) == bool:
             return s
         try:
-            res = int(s)
+            result = int(s)
         except:
             try:
-                res = float(s)
+                result = float(s)
             except:
-                res = fun(re.match("^\s*(.+)\s*$", s).string)
-        return res
+                result = fun(re.match("^\s*(.+)\s*$", s).string)
+        return result
 
-            
+    def csv(sFilename,fun):
+        filePath = Path(sFilename)
+        filePath = filePath.absolute()
+        filePath = filePath.resolve()
+        f = open(filePath,"r")
+        readLines = f.readlines()
+        f.close()
+        for line in readLines:
+            t = []
+            for s1 in re.findall("([^,]+)", line):
+                t.append(coerce(s1))
+            fun(t)

@@ -1,6 +1,6 @@
 import re
 class NUM:
-    def __init__(self,at=0,txt="")
+    def __init__(self,at=0,txt=""):
         self.at = at
         self.txt = txt
         self.n = 0
