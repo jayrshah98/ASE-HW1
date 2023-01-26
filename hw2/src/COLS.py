@@ -17,4 +17,4 @@ class COLS:
         for _,t in self.x, self.y:
             for _,col in t.items():
                 col.append(row.cells[col.at])
-    
+        
