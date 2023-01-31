@@ -1,7 +1,7 @@
-from SYM import SYM
-from NUM import NUM
-from lib import LIB
-from main import main
+from hw1.SYM import SYM
+from hw1.NUM import NUM
+from hw1.lib import LIB
+from hw1.main import main
 # from lib import seed
 # from lib import rand
 lib = LIB()
