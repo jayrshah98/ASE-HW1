@@ -55,3 +55,13 @@ class LIB:
             for s1 in re.findall("([^,]+)", line):
                 t.append(self.coerce(s1))
             fun(t)
+    
+    def kap(self, t, fun):
+        u = {}
+        for k, v in t:
+            v, k = fun(k, v)
+            u[k] = v
+        return u
+    
+    def o():
+        return

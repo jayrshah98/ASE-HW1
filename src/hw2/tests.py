@@ -1,15 +1,18 @@
 from SYM import SYM
 from NUM import NUM
+from DATA import DATA
 from lib import LIB
 from main import main
 
 lib = LIB()
 sym = SYM()
 num = NUM()
+data = DATA(main.the["file"])
 
 rnd = lib.rnd
 rand = lib.rand
 csv = lib.csv
+o = lib.o
 
 def eg_sym():
     pairs = ["a","a","a","a","b","b","c"]
@@ -41,9 +44,17 @@ def eg_csv():
     print("✅ pass:	csv" if res == True else "❌ fail:	csv")
     return res
 
+def eg_data(): 
+  print ( "✅ pass:	data" if len(data.rows) == 398 and data.cols.y[0].w == -1 and data.cols.x[0].at == 0 and len(data.cols.x) == 4 else "❌ fail:	data"  )
 
+def eg_stats():
+  pairs = { 'y': data.cols.y, 'x' : data.cols.x }
+  for k,cols in pairs:
+    print(k + "mid" + o(data.stats(2, "mid",cols)))
+    print("" + "div" + o(data.stats(2, "div",cols)))
 
-eg_sym()
 eg_num()
 eg_the()
 eg_csv()
+eg_data()
+# eg_stats()
