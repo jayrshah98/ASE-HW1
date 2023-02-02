@@ -36,15 +36,15 @@ def eg_data():
     print("✅ pass:	data" if res == True else "❌ fail:	data")
     return res
 
-# def eg_clone():
+def eg_clone():
     
-#     data2 = data.clone(data.rows)
-#     return (
-#         len(data.rows) == len(data2.rows)
-#         and data.cols.y[1].w == data2.cols.y[1].w
-#         and data.cols.x[1].at == data2.cols.x[1].at
-#         and len(data.cols.x) == len(data2.cols.x)
-#     )
+    data2 = data.clone(data.rows)
+    return (
+        len(data.rows) == len(data2.rows)
+        and data.cols.y[1].w == data2.cols.y[1].w
+        and data.cols.x[1].at == data2.cols.x[1].at
+        and len(data.cols.x) == len(data2.cols.x)
+    )
 
 def eg_half():
     #data=Data(options['file'])
@@ -63,4 +63,4 @@ eg_sym()
 eg_the()
 eg_data()
 eg_half()
-#eg_clone()
+eg_clone()
