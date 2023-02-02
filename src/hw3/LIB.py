@@ -72,4 +72,15 @@ class LIB:
         y = (abs(a*a - x2*x2))**(0.5)
         return (x2, y)
 
+    def any(t):
+        rVal = LIB.rint(None,len(t)-1)
+        return t[rVal]
+
+    def many(self,t,n):
+        u = []
+        for i in range(1, n+1):
+            u.append(any(t))
+        return u
+
+
 

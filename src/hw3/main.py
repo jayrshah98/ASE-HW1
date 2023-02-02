@@ -1,5 +1,15 @@
 class main:
-    the = {}
+    the = {
+    'dump': False,
+    # 'go': data,
+    'help': False,
+    'seed': 937162211,
+    'file' : '../../etc/data/auto93.csv',
+    'Far' : '.95',
+    'min' : '.5',
+    'p' : '2',
+    'Sample' : '512'
+    }
 
     help="""[[   
     cluster.lua : an example csv reader script
@@ -7,7 +17,7 @@ class main:
     USAGE: cluster.lua  [OPTIONS] [-g ACTION]
     OPTIONS:
     -d  --dump    on crash, dump stack   = false
-    -f  --file    name of file           = ../etc/data/auto93.csv
+    -f  --file    name of file           = ../../etc/data/auto93.csv
     -F  --Far     distance to "faraway"  = .95
     -g  --go      start-up action        = data
     -h  --help    show help              = false

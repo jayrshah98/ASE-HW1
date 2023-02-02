@@ -30,9 +30,37 @@ def eg_num():
     print("✅ pass:	num" if res == True else "❌ fail:	num")
     return res
 
+def eg_data():
+    #data = DATA(main.the["file"])
+    res = len(data.rows) == 398 and data.cols.y[0].w == -1 and data.cols.x[0].at == 0 and len(data.cols.x) == 4
+    print("✅ pass:	data" if res == True else "❌ fail:	data")
+    return res
+
+# def eg_clone():
+    
+#     data2 = data.clone(data.rows)
+#     return (
+#         len(data.rows) == len(data2.rows)
+#         and data.cols.y[1].w == data2.cols.y[1].w
+#         and data.cols.x[1].at == data2.cols.x[1].at
+#         and len(data.cols.x) == len(data2.cols.x)
+#     )
+
+def eg_half():
+    #data=Data(options['file'])
+    left,right,A,B,mid,c = data.half() 
+    print(len(left),len(right),len(data.rows))
+    print(A,c)
+    print(mid)
+    print(B)
+    return True
+
 def eg_the():
     print(str(main.the))
 
 eg_num()
 eg_sym()
 eg_the()
+eg_data()
+eg_half()
+#eg_clone()

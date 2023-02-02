@@ -9,6 +9,7 @@ csv = lib.csv
 rnd = lib.rnd
 kap = lib.kap
 cosine = lib.cosine
+many = lib.many
 
 class DATA:
     
@@ -30,11 +31,11 @@ class DATA:
         else:
             self.cols = COLS(t)
 
-    def clone(self, passed_fields):
-        data = DATA(self.cols.names)
-        for row in passed_fields:
-            self.add(row)
-        return data
+    # def clone(self, passed_fields):
+    #     data = DATA(self.cols.names)
+    #     for row in passed_fields:
+    #         self.add(row)
+    #     return data
 
     def stats(self, nPlaces, what = "mid", cols = None):
         def fun(k, col):
@@ -63,7 +64,7 @@ class DATA:
         return sorted(map(rows or self.rows)), fun,"dist"
 
 
-    def half(self,rows,cols,above):
+    def half(self,rows=None,cols=None,above=None):
 
         def project(row):
             return {'row': row, 'dist': cosine(dist(row,A), dist(row,B), c)}
