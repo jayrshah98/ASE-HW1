@@ -1,6 +1,7 @@
 import re
 import math
-
+import LIB
+rnd = LIB.rnd
 class NUM:
     def __init__(self,at=0,txt=""):
         self.at = at

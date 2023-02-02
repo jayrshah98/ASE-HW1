@@ -1,4 +1,7 @@
 import re
+import lib
+rnd = lib.rnd
+
 class NUM:
     def __init__(self,at=0,txt=""):
         self.at = at
@@ -30,4 +33,4 @@ class NUM:
         return 0 if (self.m2 < 0 or self.n < 2) else (self.m2/(self.n-1))**0.5
    
     def rnd(self,x,n):
-        return x if x == ? else rnd(x,n)
+        return x if x == "?" else rnd(x,n)
