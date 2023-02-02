@@ -8,6 +8,7 @@ lib = LIB()
 csv = lib.csv
 rnd = lib.rnd
 kap = lib.kap
+cosine = lib.cosine
 
 class DATA:
     

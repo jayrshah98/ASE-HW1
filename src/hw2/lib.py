@@ -65,3 +65,9 @@ class LIB:
     
     def o():
         return
+
+    def many(t,n, u):
+        u={}
+        for i in range(1,n):
+            u[ 1 + len(u)] = any(t)
+        return u    
