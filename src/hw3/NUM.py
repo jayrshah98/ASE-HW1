@@ -33,7 +33,7 @@ class NUM:
         return 0 if (self.m2 < 0 or self.n < 2) else (self.m2/(self.n-1))**0.5
     
     def rnd(self,x,n):
-        return x if x == "?" else rnd(x,n)
+        return x if x == "?" else LIB.rnd(x,n)
     
     def norm(self,n):
         return n if n == "?" else (n-self.lo)/(self.hi - self.lo + math.pow(10,-32))
