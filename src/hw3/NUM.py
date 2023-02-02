@@ -13,3 +13,13 @@ class NUM:
             self.w = 1
         else:
             self.w = -1
+    
+    def add(self, n):
+        if n != 0:
+            self.n = self.n + 1
+            d = n - self.mu
+            self.mu = self.mu + d / self.n
+            self.m2 = self.m2 + d* (n - self.mu)
+            self.lo = min(n,self.lo)
+            self.hi = max(n,self.hi)
+    
