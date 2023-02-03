@@ -56,11 +56,17 @@ def eg_around():
 def eg_the():
     print(str(main.the))
 
+def eg_half():
+    left,right,A,B,mid,c = data.half() 
+    print(len(left),len(right),len(data.rows))
+    print(A,c)
+    print(mid) 
+    print(B)
+    return true
 eg_num()
 eg_sym()
 eg_the()
 eg_data()
 print("✅ pass:	around" if eg_around() == True else "❌ fail:	around")
 eg_clone()
-# eg_half()
-# eg_clone()
+print("✅ pass:	around" if eg_half() == True else "❌ fail:	half")
