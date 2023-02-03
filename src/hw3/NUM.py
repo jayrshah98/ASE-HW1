@@ -53,4 +53,4 @@ class NUM:
                 n1 = 1
             else:
                 n1 = 0
-        return math.abs(n1 - n2)
+        return abs(n1 - n2)

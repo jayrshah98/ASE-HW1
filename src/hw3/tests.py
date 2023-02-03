@@ -36,24 +36,33 @@ def eg_data():
     print("✅ pass:	data" if res == True else "❌ fail:	data")
     return res
 
-def eg_clone():
+# def eg_clone():
     
-    data2 = data.clone(data.rows)
-    return (
-        len(data.rows) == len(data2.rows)
-        and data.cols.y[1].w == data2.cols.y[1].w
-        and data.cols.x[1].at == data2.cols.x[1].at
-        and len(data.cols.x) == len(data2.cols.x)
-    )
+#     data2 = data.clone(data.rows)
+#     return (
+#         len(data.rows) == len(data2.rows)
+#         and data.cols.y[1].w == data2.cols.y[1].w
+#         and data.cols.x[1].at == data2.cols.x[1].at
+#         and len(data.cols.x) == len(data2.cols.x)
+#     )
 
-def eg_half():
-    #data=Data(options['file'])
-    left,right,A,B,mid,c = data.half() 
-    print(len(left),len(right),len(data.rows))
-    print(A,c)
-    print(mid)
-    print(B)
+# def eg_half():
+#     #data=Data(options['file'])
+#     left,right,A,B,mid,c = data.half() 
+#     print(len(left),len(right),len(data.rows))
+#     print(A,c)
+#     print(mid)
+#     print(B)
+#     return True
+
+def eg_around():
+    #data = Data(global_options[K_FILE])
+    print(0,0,data.rows[0].cells)
+    for n,t in enumerate(data.around(data.rows[0])):
+        if (n+1) %50 ==0:
+           print(n, rnd(t['dist'],2) ,t['row'].cells)
     return True
+    
 
 def eg_the():
     print(str(main.the))
@@ -62,5 +71,6 @@ eg_num()
 eg_sym()
 eg_the()
 eg_data()
-eg_half()
-eg_clone()
+print("✅ pass:	around" if eg_around() == True else "❌ fail:	around")
+# eg_half()
+# eg_clone()

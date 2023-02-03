@@ -1,8 +1,10 @@
 from main import main
+from typing import Union, List, Dict
 from LIB import LIB
 from ROW import ROW
 from COLS import COLS
 import math
+import copy
 
 lib = LIB()
 csv = lib.csv
@@ -51,17 +53,22 @@ class DATA:
             s2 = s2 - math.exp(col.w * (y-x)/len(ys))
         return s1/len(ys) < s2/len(ys)
 
-    def dist(self,row1,row2,cols,n,d):
+    def dist(self,row1,row2,cols=None):
         n,d = 0,0
-        for _,col in (cols or self.cols.x):
+        if cols == None:
+            cols = self.cols.x
+        for _,col in enumerate(cols):
             n = n + 1
-            d = d + col.dist(row1.cells[col.at], row2.cells[col.at])**main.the['p']
-        return (d/n)**(1/main.the['p'])
+            d = d + col.dist(row1.cells[col.at], row2.cells[col.at])**float(main.the['p'])
+        return (d/n)**(1/float(main.the['p']))
 
-    def around(self,row1,rows,cols):
+    def around(self,row1,rows=None,cols=None):
+        if rows == None:
+            rows = copy.deepcopy(self.rows)
+        cols = (cols if cols else self.cols.x)
         def fun(row2):
             return {'row': row2, 'dist':self.dist(row1,row2,cols)}
-        return sorted(map(rows or self.rows)), fun,"dist"
+        return sorted(list(map(fun, rows)), key=lambda x: x['dist'])
 
 
     def half(self,rows=None,cols=None,above=None):
@@ -73,10 +80,10 @@ class DATA:
             return self.dist(row1,row2,cols)
 
         rows = rows or self.rows
-        some = many(rows,main.the['Sample'])
+        some = many(rows,int(main.the['Sample']))
 
         A    = above or any(some)
-        B    = self.around(A,some)[(main.the['Far'] * len(rows))//1].row
+        B    = self.around(A,some)[int(main.the['Far'] * len(rows))//1].row
         c    = dist(A,B)
 
         left, right = {}, {}
