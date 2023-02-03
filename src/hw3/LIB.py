@@ -63,17 +63,17 @@ class LIB:
             u[k] = v
         return u
     
-    def o():
+    def o(self):
         return
     
-    def cosine(a,b,c):
+    def cosine(self, a,b,c):
         x1 = (a*a + c*c - b*b) / (2*c + 0.00001)
         x2 = max(0,min(1,x1))
         y = (abs(a*a - x2*x2))**(0.5)
         return (x2, y)
 
-    def any(t):
-        rVal = LIB.rint(None,len(t)-1)
+    def any(self, t):
+        rVal = self.rint(None, len(t)-1)
         return t[rVal]
 
     def many(self,t,n):
