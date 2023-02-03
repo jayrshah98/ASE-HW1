@@ -33,11 +33,10 @@ class DATA:
         else:
             self.cols = COLS(t)
 
-    # def clone(self, passed_fields):
-    #     data = DATA(self.cols.names)
-    #     for row in passed_fields:
-    #         self.add(row)
-    #     return data
+    def clone(self, passed_fields):
+        data_1 = self
+        data_1.row = passed_fields
+        return data_1
 
     def stats(self, nPlaces, what = "mid", cols = None):
         def fun(k, col):
