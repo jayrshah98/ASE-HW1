@@ -10,14 +10,11 @@ num = NUM()
 rnd = lib.rnd
 rand = lib.rand
 
-
-
 def sym_test():
     pairs = ["a","a","a","a","b","b","c"]
     for x in pairs: 
         sym.add(x)
     res = "a" == sym.mid() and 1.379 == rnd(sym.div())
-   # print("✅ pass:	sym" if res == True else "❌ fail:	sym")
     return res
 
 def num_test():
@@ -25,7 +22,6 @@ def num_test():
     for x in pairs:
         num.add(x) 
     res = 11/7 == num.mid() and 0.787 == rnd(num.div())
-    #print("✅ pass:	num" if res == True else "❌ fail:	num")
     return res
 
 def rand_test():
@@ -41,7 +37,6 @@ def rand_test():
     print("m2",m2)
     print("rnd val",rnd(m1,1))
     res = abs(m1-m2)<0.1 and 0.5==rnd(m1,1)
-   # print("✅ pass:	rand" if res == True else "❌ fail:	rand")
     return res
 
 def the_test():
