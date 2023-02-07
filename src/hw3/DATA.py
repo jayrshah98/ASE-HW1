@@ -12,6 +12,7 @@ rnd = lib.rnd
 kap = lib.kap
 cosine = lib.cosine
 many = lib.many
+any = lib.any
 
 class DATA:
     
@@ -45,6 +46,7 @@ class DATA:
 
     def better(self,row1,row2,s1,s2,ys,x,y):
         s1, s2, ys, x, y = 0, 0, self.cols.y
+
         for _,col in ys:
             x  = col.norm( row1.cells[col.at] )
             y  = col.norm( row2.cells[col.at] )
@@ -56,17 +58,25 @@ class DATA:
         n,d = 0,0
         if cols == None:
             cols = self.cols.x
+        
         for _,col in enumerate(cols):
             n = n + 1
+            # print("row1", row1.cells)
+            # print("row2", row2.cells)
             d = d + col.dist(row1.cells[col.at], row2.cells[col.at])**float(main.the['p'])
         return (d/n)**(1/float(main.the['p']))
 
     def around(self,row1,rows=None,cols=None):
+
         if rows == None:
-            rows = copy.deepcopy(self.rows)
-        cols = (cols if cols else self.cols.x)
+            rows = self.rows
+
+        if cols == None:
+            cols = self.cols.x
+
         def fun(row2):
             return {'row': row2, 'dist':self.dist(row1,row2,cols)}
+
         return sorted(list(map(fun, rows)), key=lambda x: x['dist'])
 
 
@@ -78,28 +88,34 @@ class DATA:
         def dist(row1,row2):
             return self.dist(row1,row2,cols)
 
-        rows = rows or self.rows
+        if rows == None:
+            rows = self.rows
         some = many(rows,int(main.the['Sample']))
 
-        A    = above or any(some)
-        B    = self.around(A,some)[int(main.the['Far'] * len(rows))//1].row
-        c    = dist(A,B)
+        A  = above if above!=None else any(some)
+        B  = self.around(A,some)[int(main.the['Far'] * len(rows))//1].row
+        c  = dist(A,B)
 
-        left, right = {}, {}
+        left, right = [], []
         for n,tmp in enumerate(sorted(map(rows, project), "dist")):
-            if   n <= len(rows//2): 
+            if   n <= len(rows)//2: 
                 left.append(tmp.row)
                 mid = tmp.row
             else: right.append(tmp.row)
         return left, right, A, B, mid, c
-    
 
     def cluster(self, rows, min, cols, above):
 
-        rows = rows or self.rows
+        if rows == None:
+            rows = self.rows
+
         min  = min or (len(rows))**(main.the['min'])
-        cols = cols or self.cols.x
+
+        if cols == None:
+            cols = self.cols.x
+
         node = {'data': self.clone(rows)} 
+
         if len(rows) > 2 * min:
             left, right, node.A, node.B, node.mid = self.half(rows,cols,above)
             node.left  = self.cluster(left,  min, cols, node.A)
@@ -108,10 +124,17 @@ class DATA:
         return node 
 
     def sway(self,rows,min,cols,above):
-        rows = rows or self.rows
+
+        if rows == None:
+            rows = self.rows
+
         min  = min or (len(rows)) ** (main.the['min'])
-        cols = cols or self.cols.x
+
+        if cols == None:
+            cols = self.cols.x
+
         node = {'data': self.clone(rows)} 
+
         if len(rows) > 2 * min :
             left, right, node.A, node.B, node.mid = self.half(rows,cols,above)
             if self.better(node.B,node.A):

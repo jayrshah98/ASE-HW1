@@ -31,7 +31,6 @@ def eg_num():
     return res
 
 def eg_data():
-    #data = DATA(main.the["file"])
     res = len(data.rows) == 398 and data.cols.y[0].w == -1 and data.cols.x[0].at == 0 and len(data.cols.x) == 4
     print("✅ pass:	data" if res == True else "❌ fail:	data")
     return res
@@ -56,11 +55,21 @@ def eg_around():
 def eg_the():
     print(str(main.the))
 
+def eg_half():
+    left,right,A,B,mid,c = data.half() 
+    print(len(left),len(right),len(data.rows))
+    print(A,c)
+    print(mid) 
+    print(B)
+    return True
+
+# def eg_opimize():
+#     show(data.sway(), "mid", data.cols.y,1)
+
 eg_num()
 eg_sym()
 eg_the()
 eg_data()
 print("✅ pass:	around" if eg_around() == True else "❌ fail:	around")
 eg_clone()
-# eg_half()
-# eg_clone()
+# print("✅ pass:	around" if eg_half() == True else "❌ fail:	half")
