@@ -3,8 +3,6 @@ import random
 import re
 import sys
 from pathlib import Path
-from DATA import DATA
-from LIB import LIB
 lo = float('inf') 
 hi = float('-inf')
 seed = 937162211 
@@ -83,63 +81,21 @@ class LIB:
                 u[i][j] = t[j][i]
         return u 
 
-    def repCols(self,cols):
-        cols = self.copy(cols)
-        for _,col in enumerate(cols):
-            col[len(col)-1] = col[0] + ":" + col[len(col)-1]
-            for j in range(1,len(col)-1):
-                col[j-1] = col[j] 
-            col[len(col)]= None 
-        cols.insert(cols, 1, self.kap(cols[1], lambda k,v: "Num" + k))
-        cols[1][len(cols[1])] = "thingX"
-        return DATA(cols)
-        
+    def cosine(self, a,b,c):
+        x1 = (a*a + c*c - b*b) / (2*c + 0.00001)
+        x2 = max(0,min(1,x1))
+        y = (abs(a*a - x2*x2))**(0.5)
+        return (x2, y)    
 
-    def repRows(self, t, rows, u):
-        rows = self.copy(rows)
-
-        for j,s in enumerate(rows[len(rows)]):
-            rows[1][j] = rows[1][j] + ":" + s
-        rows[len(rows)] = None
-
-        for n,row in enumerate(rows):
-            if n==1:
-                row.append("thingX")
-            else:
-                u = t.rows[len(t.rows) - n + 2]
-                row.append(u[len(u)])
-        return  DATA(rows)
-
-    def repPlace(self, data, n, g, maxx, maxy, x, y, c):
-        n,g = 20,{}
-        for i in range(0,n):
-            g[i] = []
-            for j in range(0,n):
-                g[i][j]=" "
-        maxy=0
-        print("")
-        for r,row in enumerate(data.rows):
-            c = str(chr(64+r))
-            print(c, (row.cells[-1]))
-            x, y= row.x*n//1, row.y*n//1
-            maxy = math.max(maxy,y)
-            g[y][x] = c
-        print("")
-        for y in range(0, maxy):
-            self.oo(g[y])
-
-    def dofile(filename):
-        file = open(filename, 'r')
-        return file.read()
-
-    def repgrid(self, sFile,t,rows,cols):
-        t = self.dofile(sFile) 
-        rows = self.repRows(t, self.transpose(t.cols)) 
-        cols = self.repCols(t.cols)
-        self.show(rows.cluster())
-        self.show(cols.cluster())
-        self.repPlace(rows)
-        
+    def any(self, t):
+        rVal = self.rint(None, len(t)-1)
+        return t[rVal]
+    
+    def many(self,t,n):
+        u = []
+        for i in range(1, n+1):
+            u.append(any(t))
+        return u
 
     def settings(self,s):
         t={}

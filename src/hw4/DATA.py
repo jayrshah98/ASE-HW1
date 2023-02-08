@@ -1,10 +1,10 @@
-from main import main
 from typing import Union, List, Dict
 from LIB import LIB
 from ROW import ROW
 from COLS import COLS
 import math
 import copy
+import config
 
 lib = LIB()
 csv = lib.csv
@@ -16,7 +16,7 @@ any = lib.any
 
 class DATA:
     
-    def __init__(self, src = main.the["file"]):
+    def __init__(self, src = config.the["file"]):
         self.rows = []
         self.cols = None
         if type(src) == str:
@@ -55,8 +55,8 @@ class DATA:
             n = n + 1
             # print("row1", row1.cells)
             # print("row2", row2.cells)
-            d = d + col.dist(row1.cells[col.at], row2.cells[col.at])**float(main.the['p'])
-        return (d/n)**(1/float(main.the['p']))
+            d = d + col.dist(row1.cells[col.at], row2.cells[col.at])**float(config.the['p'])
+        return (d/n)**(1/float(config.the['p']))
 
     def around(self,row1,rows=None,cols=None):
 
@@ -82,10 +82,10 @@ class DATA:
 
         if rows == None:
             rows = self.rows
-        some = many(rows,int(main.the['Sample']))
+        some = many(rows,int(config.the['Sample']))
 
         A  = above if above!=None else any(some)
-        B  = self.around(A,some)[int(main.the['Far'] * len(rows))//1].row
+        B  = self.around(A,some)[int(config.the['Far'] * len(rows))//1].row
         c  = dist(A,B)
 
         left, right = [], []
@@ -101,7 +101,7 @@ class DATA:
         if rows == None:
             rows = self.rows
 
-        min  = min or (len(rows))**(main.the['min'])
+        min  = min or (len(rows))**(config.the['min'])
 
         if cols == None:
             cols = self.cols.x
@@ -118,3 +118,61 @@ class DATA:
     def furthest(self, row1, rows, cols, t):
         t = self.around(row1,rows,cols)
         return t[len(t)]
+
+    def repCols(self,cols):
+        cols = self.copy(cols)
+        for _,col in enumerate(cols):
+            col[len(col)-1] = col[0] + ":" + col[len(col)-1]
+            for j in range(1,len(col)-1):
+                col[j-1] = col[j] 
+            col[len(col)]= None 
+        cols.insert(cols, 1, self.kap(cols[1], lambda k,v: "Num" + k))
+        cols[1][len(cols[1])] = "thingX"
+        return DATA(cols)
+        
+
+    def repRows(self, t, rows, u):
+        rows = self.copy(rows)
+
+        for j,s in enumerate(rows[len(rows)]):
+            rows[1][j] = rows[1][j] + ":" + s
+        rows[len(rows)] = None
+
+        for n,row in enumerate(rows):
+            if n==1:
+                row.append("thingX")
+            else:
+                u = t.rows[len(t.rows) - n + 2]
+                row.append(u[len(u)])
+        return  DATA(rows)
+
+    def repPlace(self, data, n, g, maxx, maxy, x, y, c):
+        n,g = 20,{}
+        for i in range(0,n):
+            g[i] = []
+            for j in range(0,n):
+                g[i][j]=" "
+        maxy=0
+        print("")
+        for r,row in enumerate(data.rows):
+            c = str(chr(64+r))
+            print(c, (row.cells[-1]))
+            x, y= row.x*n//1, row.y*n//1
+            maxy = math.max(maxy,y)
+            g[y][x] = c
+        print("")
+        for y in range(0, maxy):
+            self.oo(g[y])
+
+    def dofile(filename):
+        file = open(filename, 'r')
+        return file.read()
+
+    def repgrid(self, sFile,t,rows,cols):
+        t = self.dofile(sFile) 
+        rows = self.repRows(t, self.transpose(t.cols)) 
+        cols = self.repCols(t.cols)
+        self.show(rows.cluster())
+        self.show(cols.cluster())
+        self.repPlace(rows)
+        
