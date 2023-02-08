@@ -13,7 +13,6 @@ rnd = lib.rnd
 rand = lib.rand
 csv = lib.csv
 
-
 def sym_test():
     pairs = ["a","a","a","a","b","b","c"]
     for x in pairs: 
@@ -44,10 +43,13 @@ def csv_test():
 def data_test(): 
    return len(data.rows) == 398 and data.cols.y[0].w == -1 and data.cols.x[0].at == 0 and len(data.cols.x) == 4
 
+
 def stats_test():
   pairs = { 'y': data.cols.y, 'x' : data.cols.x }
   for k,cols in pairs.items():
     print(k + "\tmid\t" + str(data.stats(2, "mid",cols)))
     print("" + "\tdiv\t" + str(data.stats(2, "div",cols)))
   return True
+
+
 

@@ -64,6 +64,9 @@ class LIB:
             u[k or len(u)+1] = v
         return u
     
+    # def o():
+    #     return
+
     def many(self,t,n, u):
         u={}
         for _ in range(1,n):
