@@ -63,11 +63,13 @@ class LIB:
             u[k] = v
         return u
     
-    def o():
-        return
+    # def o():
+    #     return
 
-    def many(t,n, u):
+    def many(self,t,n, u):
         u={}
-        for i in range(1,n):
-            u[ 1 + len(u)] = any(t)
+        for _ in range(1,n):
+            u[ 1 + len(u)] = self.any(t)
         return u    
+
+    
