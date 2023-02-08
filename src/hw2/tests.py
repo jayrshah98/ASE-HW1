@@ -12,7 +12,7 @@ data = DATA(config.the["file"])
 rnd = lib.rnd
 rand = lib.rand
 csv = lib.csv
-o = lib.o
+# o = lib.o
 
 def sym_test():
     pairs = ["a","a","a","a","b","b","c"]
@@ -44,9 +44,9 @@ def csv_test():
 def data_test(): 
    return len(data.rows) == 398 and data.cols.y[0].w == -1 and data.cols.x[0].at == 0 and len(data.cols.x) == 4
 
-def stats_test():
-  pairs = { 'y': data.cols.y, 'x' : data.cols.x }
-  for k,cols in pairs.items():
-    print(k + "mid" + o(data.stats(2, "mid",cols)))
-    print("" + "div" + o(data.stats(2, "div",cols)))
+# def stats_test():
+#   pairs = { 'y': data.cols.y, 'x' : data.cols.x }
+#   for k,cols in pairs.items():
+#     print(k + "mid" + o(data.stats(2, "mid",cols)))
+#     print("" + "div" + o(data.stats(2, "div",cols)))
 
