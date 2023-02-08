@@ -39,10 +39,12 @@ class DATA:
         data_1.row = passed_fields
         return data_1
 
-    def stats(self, nPlaces, what = "mid", cols = None):
+    def stats(self, nPlaces, what, cols = None):
         def fun(k, col):
-            return rnd(getattr(col, what or 'mid')(), nPlaces), col.txt
-        return kap(cols or self.cols.y, fun)
+            mid = getattr(col,what or "mid")
+            rounded = round(float(mid()),nPlaces)
+            return (rounded,col.txt)
+        return kap(cols or self.cols.y,fun)
 
     def dist(self,row1,row2,cols=None):
         n,d = 0,0
