@@ -1,8 +1,10 @@
 import config 
 from tests import *
 from lib import LIB
+import sys
 lib = LIB()
-
+sys.stdin.reconfigure(encoding='utf-8') 
+sys.stdout.reconfigure(encoding='utf-8')
 def main(options, help, funs, saved = {}, fails = 0):
     for k, v in lib.cli(lib.settings(help)).items():
         options[k] = v
@@ -26,10 +28,10 @@ def eg(key,str,func):
     egs[key] = func
     config.help = config.help + ("  -g  %s\t%s\n" % (key,str))
 
-eg("the","show settings", the_test)
 eg("sym","check syms",sym_test)
 eg("num","check nums",num_test)
 eg("csv","read from csv",csv_test)
 eg("data","read DATA csv",data_test)
 eg("stats","stats from DATA",stats_test)
+eg("the","show settings", the_test)
 main(config.the, config.help, egs)
