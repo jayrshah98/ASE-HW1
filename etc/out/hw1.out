@@ -1,0 +1,7 @@
+✅ pass:	sym
+✅ pass:	num
+{'dump': False, 'go': <built-in function all>, 'help': False, 'seed': 937162211}
+m1 0.4908828874
+m2 0.5091760077
+rnd val 0.5
+✅ pass:	rand
