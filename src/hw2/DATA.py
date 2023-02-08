@@ -1,7 +1,8 @@
-from main import main
+#from main import main
 from lib import LIB
 from ROW import ROW
 from COLS import COLS
+import config
 
 lib = LIB()
 csv = lib.csv
@@ -10,11 +11,11 @@ kap = lib.kap
 
 class DATA:
     
-    def __init__(self, src = main.the["file"]):
+    def __init__(self, src):
         self.rows = []
         self.cols = None
         if type(src) == str:
-            csv(src, self.add)
+            lib.csv(src, self.add)
 
         elif src:
             for x in src:
@@ -28,14 +29,15 @@ class DATA:
         else:
             self.cols = COLS(t)
 
-    def clone(self, passed_fields):
+    def clone(self,init, passed_fields):
         data = DATA(self.cols.names)
-        for row in passed_fields:
-            self.add(row)
+        map(init or {}, data.add(passed_fields))
         return data
 
-    def stats(self, nPlaces, what = "mid", cols = None):
+    def stats(self, nPlaces, what, cols = None):
         def fun(k, col):
-            return rnd(getattr(col, what or 'mid')(), nPlaces), col.txt
-        return kap(cols or self.cols.y, fun)
+            mid = getattr(col,what or mid)
+            rounded = round(float(mid()),nPlaces)
+            return (rounded,col.txt)
+        return kap(cols or self.cols.y,fun)
 

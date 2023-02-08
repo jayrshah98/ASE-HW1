@@ -1,5 +1,6 @@
 import re
-import lib
+from lib import LIB
+lib = LIB()
 rnd = lib.rnd
 
 class NUM:
