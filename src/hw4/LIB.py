@@ -3,6 +3,7 @@ import random
 import re
 import sys
 from pathlib import Path
+import copy
 lo = float('inf') 
 hi = float('-inf')
 seed = 937162211 
@@ -72,6 +73,14 @@ class LIB:
             u[ 1 + len(u)] = self.any(t)
         return u    
 
+    def map(self, t, fun, u):
+        u = {}
+        for k,v in t.items():
+            v,k = fun(v)
+            if u.get(k) is not None:
+                u[k] = v
+            else:
+                u[len(u)+1] = v
 
     def transpose(self, t, u):
         u = []
@@ -113,3 +122,7 @@ class LIB:
                         sys.argv) else False) or v == "False" and "true" or v == "True" and "false"
                 options[k] = self.coerce(v)
         return options
+
+    def copy(t):
+        return copy.deepcopy(t)
+

@@ -82,5 +82,13 @@ class LIB:
             u.append(any(t))
         return u
 
+    def map(self, t, fun, u):
+        u = {}
+        for k,v in t.items():
+            v,k = fun(v)
+            if u.get(k) is not None:
+                u[k] = v
+            else:
+                u[len(u)+1] = v
 
 

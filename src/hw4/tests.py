@@ -30,3 +30,14 @@ def num_test():
 def the_test():
     print(str(config.the))
 
+def copy_test():
+    t1 = {'a':1,'b':{'c':2,'d':{3}}}
+    t2 = lib.copy(t1)
+    t2.b.d[0] = 1000
+    print("b4",t1,"\nafter",t2)
+
+def repcols_test():
+    t = lib.repCols(lib.dofile(config.the.file).cols)
+    print(t.cols.all)
+    print(t.rows)
+

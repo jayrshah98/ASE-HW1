@@ -118,7 +118,6 @@ class DATA:
     def furthest(self, row1, rows, cols, t):
         t = self.around(row1,rows,cols)
         return t[len(t)]
-
     def repCols(self,cols):
         cols = self.copy(cols)
         for _,col in enumerate(cols):
