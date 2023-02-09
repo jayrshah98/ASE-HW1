@@ -2,6 +2,7 @@ import math
 import random
 import re
 import sys
+import json
 from pathlib import Path
 import copy
 lo = float('inf') 
@@ -125,8 +126,9 @@ class LIB:
         return copy.deepcopy(t)
 
     def dofile(self,filename):
-        file = open(filename, 'r')
-        return file.read()
+        with open(filename) as file:
+            f = file.read()
+        return json.loads(f)
 
     def last(self,t):
         return t[len(t)]

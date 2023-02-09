@@ -164,11 +164,11 @@ class DATA:
         for y in range(0, maxy):
             self.oo(g[y])
 
-    def repgrid(self, sFile,t,rows,cols):
-        t = self.dofile(sFile) 
-        rows = self.repRows(t, self.transpose(t.cols)) 
+    def repgrid(self, sFile):
+        t = lib.dofile(sFile) 
+        rows = self.repRows(t, lib.transpose(t.cols)) 
         cols = self.repCols(t.cols)
-        self.show(rows.cluster())
-        self.show(cols.cluster())
+        lib.show(rows.cluster())
+        lib.show(cols.cluster())
         self.repPlace(rows)
         
