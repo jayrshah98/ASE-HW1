@@ -14,6 +14,7 @@ cosine = lib.cosine
 many = lib.many
 any = lib.any
 dofile = lib.dofile
+copy = lib.copy
 
 class DATA:
     
@@ -119,8 +120,9 @@ class DATA:
     def furthest(self, row1, rows, cols, t):
         t = self.around(row1,rows,cols)
         return t[len(t)]
+
     def repCols(self,cols):
-        cols = self.copy(cols)
+        cols = copy(cols)
         for _,col in enumerate(cols):
             col[len(col)-1] = col[0] + ":" + col[len(col)-1]
             for j in range(1,len(col)-1):
@@ -131,20 +133,19 @@ class DATA:
         return DATA(cols)
         
 
-    def repRows(self, t, rows, u):
-        rows = self.copy(rows)
-
-        for j,s in enumerate(rows[len(rows)]):
-            rows[1][j] = rows[1][j] + ":" + s
-        rows[len(rows)] = None
-
+    def repRows(self, t, rows):
+        rows = copy(rows)
+        print(rows)
+        for j,s in enumerate(rows[-1]):
+            rows[0][j] = str(rows[0][j]) + ":" + str(s)
+        del rows[-1]
         for n,row in enumerate(rows):
-            if n==1:
+            if n==0:
                 row.append("thingX")
             else:
-                u = t.rows[len(t.rows) - n + 2]
-                row.append(u[len(u)])
-        return  DATA(rows)
+                u = t["rows"][len(t["rows"]) - n]
+                row.append(u[-1])
+        return DATA(rows)
 
     def repPlace(self, data, n, g, maxx, maxy, x, y, c):
         n,g = 20,{}

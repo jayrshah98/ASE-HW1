@@ -34,35 +34,36 @@ def the_test():
 def copy_test():
     t1 = {'a':1,'b':{'c':2,'d':[3]}}
     t2 = lib.copy(t1)
-    t2['b']['d'][0] = 1000
+    t2["b"]["d"][0] = 1000
     print("b4",t1,"\nafter",t2)
 
 def repcols_test():
-    t = data.repCols(lib.dofile(config.the['file']).cols)
+    t = data.repCols(lib.dofile(config.the["file"])).cols)
     print(t.cols.all)
     print(t.rows)
 
 def reprows_test():
     t=dofile(config.the["file"])
-    print("file contents", t)
-    rows = data.repRows(t, lib.transpose(t['cols']))
-    print(rows.cols.all)
-    print(rows.rows)
+    rows = data.repRows(t, lib.transpose(t["cols"]))
+    for col in rows.cols.all:
+        print(vars(col))
+    for row in rows.rows:
+        print(vars(row))
 
 def synonyms_test():
-    lib.show(data.repCols(dofile(config.the['file']).cols).cluster())
+    lib.show(data.repCols(dofile(config.the["file"]).cols).cluster())
 
 def prototype_test():
-    t = dofile(config.the['file'])
-    rows = data.repRows(t, lib.transpose(t.cols))
+    t = dofile(config.the["file"])
+    rows = data.repRows(t, lib.transpose(t["cols"]))
     lib.show(rows.cluster())
 
 def position_test():
-    t=dofile(config.the['file'])
-    rows = data.repRows(t, lib.transpose(t.cols))
+    t=dofile(config.the["file"])
+    rows = data.repRows(t, lib.transpose(t["cols"]))
     rows.cluster()
     data.repPlace(rows)
 
 def every_test():
-    data.repgrid(config.the['file'])
+    data.repgrid(config.the["file"])
 

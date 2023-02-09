@@ -81,12 +81,12 @@ class LIB:
             else:
                 u[len(u)+1] = v
 
-    def transpose(self, t, u):
+    def transpose(self, t):
         u = []
-        for i in range(0, len(t[0])):
-            u[i] = []; 
+        for i in range(0, len(t[1])):
+            u.append([])
             for j in range(0, len(t)):
-                u[i][j] = t[j][i]
+                u[i].append(t[j][i])
         return u 
 
     def cosine(self, a,b,c):
@@ -125,10 +125,23 @@ class LIB:
     def copy(self,t):
         return copy.deepcopy(t)
 
-    def dofile(self,filename):
-        with open(filename) as file:
-            f = file.read()
-        return json.loads(f)
+    def dofile(self,filepath):
+        filepath = (Path(__file__).parent / filepath).resolve()
+        file = open(filepath,"r",encoding = "utf-8")
+        temp = (
+        re.findall(r"(?<=return )[^.]*", file.read())[0]
+        .replace("{", "[")
+        .replace("}", "]")
+        .replace("=", ":")
+        .replace("[\n", "{\n")
+        .replace(" ]", " }")
+        .replace("'", '"')
+        .replace("_", '"_"')
+        )
+        file.close()
+        f = json.loads(re.sub(r"(\w+):", r'"\1":', temp)[:-2] + "}")
+        return f
+
 
     def last(self,t):
         return t[len(t)]
