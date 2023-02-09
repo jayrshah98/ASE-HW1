@@ -26,23 +26,21 @@ class LIB:
         return math.floor(n * mult + 0.5) / mult   
 
     def coerce(self,s):
-        def fun(s1):
-            if s1 == "true" or s1 == "True":
-                return True
-            elif s1 == "false" or s1 == "False":
-                return False
-            else:
-                return s1
-        if type(s) == bool:
-            return s
+
         try:
-            result = int(s)
+            return int(s)
         except:
             try:
-                result = float(s)
+                return float(s)
             except:
-                result = fun(str(re.match("^\s*(.+)\s*$", s)))
-        return result
+                pass
+
+        if s == "true" or s == "True":
+            return True
+        elif s == "false" or s == "False":
+            return False
+        else:
+            return s       
 
     def csv(self,sFilename,fun):
         filePath = Path(sFilename)
@@ -123,14 +121,14 @@ class LIB:
                 options[k] = self.coerce(v)
         return options
 
-    def copy(t):
+    def copy(self,t):
         return copy.deepcopy(t)
 
-    def dofile(filename):
+    def dofile(self,filename):
         file = open(filename, 'r')
         return file.read()
 
-    def last(t):
+    def last(self,t):
         return t[len(t)]
 
     def show(self,node,what,cols,nPlaces,lvl):

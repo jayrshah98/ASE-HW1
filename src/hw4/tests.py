@@ -34,7 +34,7 @@ def the_test():
 def copy_test():
     t1 = {'a':1,'b':{'c':2,'d':[3]}}
     t2 = lib.copy(t1)
-    t2.b.d[0] = 1000
+    t2['b']['d'][0] = 1000
     print("b4",t1,"\nafter",t2)
 
 def repcols_test():

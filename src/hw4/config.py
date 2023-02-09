@@ -9,7 +9,7 @@ the = {
     }
 
 help=""""   
-gird.lua : a rep grid processor
+grid.lua : a rep grid processor
 (c)2022, Tim Menzies <timm@ieee.org>, BSD-2 
 USAGE: grid.lua  [OPTIONS] [-g ACTION]
 OPTIONS:
