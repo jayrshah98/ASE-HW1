@@ -13,6 +13,7 @@ kap = lib.kap
 cosine = lib.cosine
 many = lib.many
 any = lib.any
+dofile = lib.dofile
 
 class DATA:
     
@@ -162,10 +163,6 @@ class DATA:
         print("")
         for y in range(0, maxy):
             self.oo(g[y])
-
-    def dofile(filename):
-        file = open(filename, 'r')
-        return file.read()
 
     def repgrid(self, sFile,t,rows,cols):
         t = self.dofile(sFile) 

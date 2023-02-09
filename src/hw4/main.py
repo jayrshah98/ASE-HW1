@@ -31,4 +31,14 @@ def eg(key,str,func):
 eg("sym","check syms",sym_test)
 eg("num","check nums",num_test)
 eg("the","show settings", the_test)
+# eg("copy","check copy", copy_test)
+# eg("reprows","check reprows", reprows_test)
+# eg("repcols","check repcols", reprows_test)
+# eg("synonyms","check synonyms", synonyms_test)
+# eg("prototype","check prototype", prototype_test)
+# eg("position","check position", [position_test])
+# eg("every","check every", [every_test])
+
+
+
 main(config.the, config.help, egs)

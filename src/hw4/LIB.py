@@ -41,7 +41,7 @@ class LIB:
             try:
                 result = float(s)
             except:
-                result = fun(re.match("^\s*(.+)\s*$", s).string)
+                result = fun(str(re.match("^\s*(.+)\s*$", s)))
         return result
 
     def csv(self,sFilename,fun):
@@ -125,4 +125,19 @@ class LIB:
 
     def copy(t):
         return copy.deepcopy(t)
+
+    def dofile(filename):
+        file = open(filename, 'r')
+        return file.read()
+
+    def last(t):
+        return t[len(t)]
+
+    def show(self,node,what,cols,nPlaces,lvl):
+        if node:
+            lvl = lvl if lvl else 0
+            print(("|.. ").rep(lvl))
+            print(self.o(self.last(self.last(node.data.rows).cells)) if not node.left else self.rnd(100*node.c))
+            self.show(node.left, what,cols, nPlaces, lvl+1)
+            self.show(node.right, what,cols,nPlaces, lvl+1)
 
