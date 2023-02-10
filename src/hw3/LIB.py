@@ -59,9 +59,9 @@ class LIB:
     
     def kap(self, t, fun):
         u = {}
-        for k, v in t:
+        for k, v in enumerate(t):
             v, k = fun(k, v)
-            u[k] = v
+            u[k or len(u)+1] = v
         return u
     
     def o(self):

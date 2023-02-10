@@ -30,8 +30,8 @@ def eg(key,str,func):
 
 eg("sym","check syms",sym_test)
 eg("num","check nums",num_test)
-#eg("csv","read from csv",csv_test)
+eg("csv","read from csv",csv_test)
 eg("data","read DATA csv",data_test)
-#eg("stats","stats from DATA",stats_test)
+eg("stats","stats from DATA",stats_test)
 eg("the","show settings", the_test)
 main(config.the, config.help, egs)

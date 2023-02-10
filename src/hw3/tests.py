@@ -30,26 +30,26 @@ def num_test():
 def the_test():
     print(str(config.the))
 
-# def csv_test():
-#     global n
-#     n = 0
-#     def fu(t):
-#         global n
-#         n += len(t)
-#     csv(config.the["file"],fu)
-#     res = 8*399 == n
-#     return res
+def csv_test():
+    global n
+    n = 0
+    def fu(t):
+        global n
+        n += len(t)
+    csv(config.the["file"],fu)
+    res = 8*399 == n
+    return res
 
 def data_test(): 
    return len(data.rows) == 398 and data.cols.y[0].w == -1 and data.cols.x[0].at == 0 and len(data.cols.x) == 4
 
 
-# def stats_test():
-#   pairs = { 'y': data.cols.y, 'x' : data.cols.x }
-#   for k,cols in pairs.items():
-#     print(k + "\tmid\t" + str(data.stats(2, "mid",cols)))
-#     print("" + "\tdiv\t" + str(data.stats(2, "div",cols)))
-#   return True
+def stats_test():
+  pairs = { 'y': data.cols.y, 'x' : data.cols.x }
+  for k,cols in pairs.items():
+    print(k + "\tmid\t" + str(data.stats(2, "mid",cols)))
+    print("" + "\tdiv\t" + str(data.stats(2, "div",cols)))
+  return True
 
 
 
