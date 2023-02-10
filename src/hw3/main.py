@@ -1,29 +1,37 @@
-class main:
-    the = {
-    'dump': False,
-    # 'go': data,
-    'help': False,
-    'seed': 937162211,
-    'file' : '../../etc/data/auto93.csv',
-    'Far' : '.95',
-    'min' : '.5',
-    'p' : '2',
-    'Sample' : '512'
-    }
+import config 
+from tests import *
+from LIB import LIB
+import sys
+lib = LIB()
+sys.stdin.reconfigure(encoding='utf-8') 
+sys.stdout.reconfigure(encoding='utf-8')
+def main(options, help, funs, saved = {}, fails = 0):
+    for k, v in lib.cli(lib.settings(help)).items():
+        options[k] = v
+        saved[k] = v
+    if options["help"]:
+        print(help)
+    else:
+        for what in funs:
+            if options["go"] == "all" or what == options["go"]:
+                for k,v in saved.items():
+                    options[k] = v
+                if funs[what]() == False:
+                    fails = fails + 1
+                    print("❌ fail:", what)
+                else:
+                    print("✅ pass:", what)
+    exit(fails)
 
-    help="""[[   
-    cluster.lua : an example csv reader script
-    (c)2022, Tim Menzies <timm@ieee.org>, BSD-2 
-    USAGE: cluster.lua  [OPTIONS] [-g ACTION]
-    OPTIONS:
-    -d  --dump    on crash, dump stack   = false
-    -f  --file    name of file           = ../../etc/data/auto93.csv
-    -F  --Far     distance to "faraway"  = .95
-    -g  --go      start-up action        = data
-    -h  --help    show help              = false
-    -m  --min     stop clusters at N^min = .5
-    -p  --p       distance coefficient   = 2
-    -s  --seed    random number seed     = 937162211
-    -S  --Sample  sampling data size     = 512
-    ACTIONS:
-    ]]"""
+egs = {}
+def eg(key,str,func):
+    egs[key] = func
+    config.help = config.help + ("  -g  %s\t%s\n" % (key,str))
+
+eg("sym","check syms",sym_test)
+eg("num","check nums",num_test)
+#eg("csv","read from csv",csv_test)
+eg("data","read DATA csv",data_test)
+#eg("stats","stats from DATA",stats_test)
+eg("the","show settings", the_test)
+main(config.the, config.help, egs)

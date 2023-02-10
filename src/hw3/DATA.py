@@ -1,10 +1,10 @@
-from main import main
 from typing import Union, List, Dict
 from LIB import LIB
 from ROW import ROW
 from COLS import COLS
 import math
 import copy
+import config
 
 lib = LIB()
 csv = lib.csv
@@ -16,7 +16,7 @@ any = lib.any
 
 class DATA:
     
-    def __init__(self, src = main.the["file"]):
+    def __init__(self, src = config.the["file"]):
         self.rows = []
         self.cols = None
         if type(src) == str:
