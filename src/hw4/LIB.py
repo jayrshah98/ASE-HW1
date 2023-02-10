@@ -83,7 +83,7 @@ class LIB:
 
     def transpose(self, t):
         u = []
-        for i in range(0, len(t[1])):
+        for i in range(0, len(t[0])):
             u.append([])
             for j in range(0, len(t)):
                 u[i].append(t[j][i])
@@ -153,4 +153,10 @@ class LIB:
             print(self.o(self.last(self.last(node.data.rows).cells)) if not node.left else self.rnd(100*node.c))
             self.show(node.left, what,cols, nPlaces, lvl+1)
             self.show(node.right, what,cols,nPlaces, lvl+1)
+
+    def oo(self,t):
+        td = t.__dict__
+        td['a'] = t.__class__.__name__
+        td['id'] = id(t)
+        print(dict(sorted(td.items())))
 

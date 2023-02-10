@@ -13,6 +13,7 @@ rnd = lib.rnd
 rand = lib.rand
 csv = lib.csv
 dofile = lib.dofile
+oo = lib.oo
 
 def sym_test():
     pairs = ["a","a","a","a","b","b","c"]
@@ -38,17 +39,19 @@ def copy_test():
     print("b4",t1,"\nafter",t2)
 
 def repcols_test():
-    t = data.repCols(lib.dofile(config.the["file"])).cols)
-    print(t.cols.all)
-    print(t.rows)
+    t = data.repCols(dofile(config.the['file'])['cols'])
+    for col in t.cols.all:
+        print(vars(col))
+    for row in t.rows:
+        print(vars(row))
 
 def reprows_test():
     t=dofile(config.the["file"])
     rows = data.repRows(t, lib.transpose(t["cols"]))
     for col in rows.cols.all:
-        print(vars(col))
+        oo(col)
     for row in rows.rows:
-        print(vars(row))
+        oo(row)
 
 def synonyms_test():
     lib.show(data.repCols(dofile(config.the["file"]).cols).cluster())
