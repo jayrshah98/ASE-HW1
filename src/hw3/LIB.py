@@ -14,7 +14,7 @@ class LIB:
         pass
 
     def rint(self, lo, hi):
-        return math.floor(0.5 + random.Random(lo,hi))
+        return math.floor(0.5 + random.randrange(lo,hi))
 
     def rand(self,lo =0, hi =1):
         global seed
@@ -74,13 +74,13 @@ class LIB:
         return (x2, y)
 
     def any(self, t):
-        rVal = self.rint(None, len(t)-1)
+        rVal = self.rint(0, len(t)-1)
         return t[rVal]
 
     def many(self,t,n):
-        u = []
+        u = {}
         for i in range(1, n+1):
-            u.append(any(t))
+            u[1+len(u)]=(any(t))
         return u
 
     def map(self, t, fun, u):
@@ -109,5 +109,11 @@ class LIB:
                 options[k] = self.coerce(v)
         return options
 
-
+    def show(self,node,what,cols,nPlaces,lvl):
+        if node:
+            lvl = lvl if lvl else 0
+            print(("|.. ").rep(lvl))
+            print(self.o(self.last(self.last(node.data.rows).cells)) if not node.left else self.rnd(100*node.c))
+            self.show(node.left, what,cols, nPlaces, lvl+1)
+            self.show(node.right, what,cols,nPlaces, lvl+1)
 

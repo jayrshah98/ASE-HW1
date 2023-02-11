@@ -54,17 +54,17 @@ class DATA:
             s2 = s2 - math.exp(col.w * (y-x)/len(ys))
         return s1/len(ys) < s2/len(ys)
 
-    def dist(self,row1,row2,cols=None):
+    def dist(self,row1 = None,row2 = None,cols=None):
         n,d = 0,0
         if cols == None:
             cols = self.cols.x
         
         for _,col in enumerate(cols):
             n = n + 1
-            # print("row1", row1.cells)
-            # print("row2", row2.cells)
-            d = d + col.dist(row1.cells[col.at], row2.cells[col.at])**float(main.the['p'])
-        return (d/n)**(1/float(main.the['p']))
+            print("row1", row1.cells)
+            print("row2", row2.cells)
+            d = d + col.dist(row1.cells[col.at], row2.cells[col.at])**float(config.the['p'])
+        return (d/n)**(1/float(config.the['p']))
 
     def around(self,row1,rows=None,cols=None):
 
@@ -88,28 +88,27 @@ class DATA:
         def dist(row1,row2):
             return self.dist(row1,row2,cols)
 
-        if rows == None:
-            rows = self.rows
-        some = many(rows,int(main.the['Sample']))
+        rows = rows if rows else self.rows
+        some = many(rows,config.the['Sample'])
 
         A  = above if above!=None else any(some)
-        B  = self.around(A,some)[int(main.the['Far'] * len(rows))//1].row
+        B  = self.around(A,some)[int(config.the['Far'] * len(rows))//1]['row']
         c  = dist(A,B)
 
         left, right = [], []
-        for n,tmp in enumerate(sorted(map(rows, project), "dist")):
+        for n,tmp in enumerate(sorted(list(map(rows, project)), key=lambda x: x["dist"])):
             if   n <= len(rows)//2: 
-                left.append(tmp.row)
-                mid = tmp.row
-            else: right.append(tmp.row)
+                left.append(tmp["row"])
+                mid = tmp["row"]                
+            else: right.append(tmp["row"])
         return left, right, A, B, mid, c
 
-    def cluster(self, rows, min, cols, above):
+    def cluster(self, rows = None, min = None, cols = None, above = None):
 
         if rows == None:
             rows = self.rows
 
-        min  = min or (len(rows))**(main.the['min'])
+        min  = min or (len(rows))**(config.the['min'])
 
         if cols == None:
             cols = self.cols.x
@@ -128,7 +127,7 @@ class DATA:
         if rows == None:
             rows = self.rows
 
-        min  = min or (len(rows)) ** (main.the['min'])
+        min  = min or (len(rows)) ** (config.the['min'])
 
         if cols == None:
             cols = self.cols.x

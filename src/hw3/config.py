@@ -2,9 +2,15 @@ global the, Help, Seed
 
 the = {
     'dump': False,
-    'go': None,
+    'file' : '../../etc/data/auto93.csv',
+    'far' : .95,
+    'go' : 'data',
+    'help' : 'false',
+    'min' : .5,
+    'p' : 2,
     'seed': 937162211,
-    'file' : '../../etc/data/auto93.csv'
+    'Sample' : 512
+
 }
 help = """"
 cluster.lua : an example csv reader script

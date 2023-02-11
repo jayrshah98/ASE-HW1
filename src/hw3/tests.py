@@ -51,5 +51,16 @@ def stats_test():
     print("" + "\tdiv\t" + str(data.stats(2, "div",cols)))
   return True
 
+def half_test():
+    data = DATA(config.the['file'])
+    left,right,A,B,mid,c = data.half()
+    print(len(left),len(right),len(data.rows))
+    print(A.cells,c)
+    print(mid.cells)
+    print(B.cells)
+    return True
 
+def cluster_test():
+    data = DATA(config.the['file'])
+    lib.show(data.cluster(),"mid",data.cols.y,1)
 
