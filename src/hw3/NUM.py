@@ -10,18 +10,14 @@ class NUM:
         self.m2 = 0
         self.lo = float('inf') 
         self.hi = float('-inf')
-        x = re.search('-$',txt)
-        if(x==None):
-            self.w = 1
-        else:
-            self.w = -1
+        self.w = (self.txt.find("-$") and -1) or 1 
     
     def add(self, n):
-        if n != 0:
+        if n != "?":
             self.n = self.n + 1
             d = n - self.mu
-            self.mu = self.mu + d / self.n
-            self.m2 = self.m2 + d* (n - self.mu)
+            self.mu = self.mu + (d / self.n)
+            self.m2 = self.m2 + (d* (n - self.mu))
             self.lo = min(n,self.lo)
             self.hi = max(n,self.hi)
     
@@ -40,17 +36,17 @@ class NUM:
     def dist(self,n1,n2):
         if n1 == "?" and n2 == "?":
             return 1
-        n1 = self.norm(n1)
-        n2 = self.norm(n2)
-        if n2 == "?":
-            if n1 < 0.5:
-                n2=1
-            else:
-                n2=0
-        
-        if n1 == "?":
-            if n2 < 0.5:
+        else: 
+            n1 = self.norm(n1)
+            n2 = self.norm(n2)
+            if n1 == "?" and n2 < .5: 
                 n1 = 1
-            else:
+            else: 
                 n1 = 0
-        return abs(n1 - n2)
+            if n2 == "?" and n1 < .5: 
+                n2 = 1
+            else: 
+                n2 = 0 
+            
+            return abs(n1 - n2)
+        

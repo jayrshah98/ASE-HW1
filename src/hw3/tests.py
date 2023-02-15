@@ -30,26 +30,59 @@ def num_test():
 def the_test():
     print(str(config.the))
 
-# def csv_test():
-#     global n
-#     n = 0
-#     def fu(t):
-#         global n
-#         n += len(t)
-#     csv(config.the["file"],fu)
-#     res = 8*399 == n
-#     return res
+def csv_test():
+    global n
+    n = 0
+    def fu(t):
+        global n
+        n += len(t)
+    csv(config.the["file"],fu)
+    res = 8*399 == n
+    return res
 
 def data_test(): 
    return len(data.rows) == 398 and data.cols.y[0].w == -1 and data.cols.x[0].at == 0 and len(data.cols.x) == 4
 
 
-# def stats_test():
-#   pairs = { 'y': data.cols.y, 'x' : data.cols.x }
-#   for k,cols in pairs.items():
-#     print(k + "\tmid\t" + str(data.stats(2, "mid",cols)))
-#     print("" + "\tdiv\t" + str(data.stats(2, "div",cols)))
-#   return True
+def test_clone():
+    data1 = DATA(config.the["file"])
+    data2 = data1.clone(data1.rows)
+
+    return (
+        len(data1.rows) == len(data2.rows)
+        and data1.cols.y[1].w == data2.cols.y[1].w
+        and data1.cols.x[1].at == data2.cols.x[1].at
+        and len(data1.cols.x) == len(data2.cols.x)
+    )
+
+def stats_test():
+  pairs = { 'y': data.cols.y, 'x' : data.cols.x }
+  for k,cols in pairs.items():
+    print(k + "\tmid\t" + str(data.stats("mid",cols,2)))
+    print("" + "\tdiv\t" + str(data.stats("div",cols,2)))
+  return True
+
+def half_test():
+    data = DATA(config.the['file'])
+    left,right,A,B,mid,c = data.half()
+    print(len(left),len(right),len(data.rows))
+    print(A.cells,c)
+    print(mid.cells)
+    print(B.cells)
+    return True
+
+def cluster_test():
+    data = DATA(config.the['file'])
+    lib.show(data.cluster(),"mid",data.cols.y,1)
 
 
+def test_around():
+    data=DATA(config.the['file'])
+    print(0,0,data.rows[0].cells)
+    for n,t in enumerate(data.around(data.rows[0])):
+        if (n+1) %50 ==0:
+            print(n, rnd(t['dist'],2) ,t['row'].cells)
 
+def test_optimize():
+    data = DATA(config.the['file'])
+    lib.show(data.sway(), "mid", data.cols.y, 1)
