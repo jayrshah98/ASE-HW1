@@ -3,6 +3,7 @@ import random
 import re
 import sys
 from pathlib import Path
+import config
 
 lo = float('inf') 
 hi = float('-inf')
@@ -14,10 +15,11 @@ class LIB:
         pass
 
     def rint(self, lo, hi):
-        return math.floor(0.5 + random.randrange(lo,hi))
+        return math.floor(0.5 + self.rand(lo,hi))
 
-    def rand(self,lo =0, hi =1):
+    def rand(self,lo, hi):
         global seed
+        lo, hi = lo or 0, hi or 1
         seed = (16807 * seed) % 2147483647
         return lo + (hi-lo) * seed / 2147483647
 
@@ -59,38 +61,31 @@ class LIB:
     
     def kap(self, t, fun):
         u = {}
-        for k, v in enumerate(t):
-            v, k = fun(k, v)
+        for k,v in enumerate(t):
+            v, k = fun(k,v) 
             u[k or len(u)+1] = v
+        
         return u
     
     def o(self):
         return
     
     def cosine(self, a,b,c):
-        x1 = (a*a + c*c - b*b) / (2*c + 0.00001)
+        x1 = (a*a + c*c - b*b) / (2**c)
         x2 = max(0,min(1,x1))
         y = (abs(a*a - x2*x2))**(0.5)
         return (x2, y)
 
     def any(self, t):
-        rVal = self.rint(0, len(t)-1)
-        return t[rVal]
+       rintVal = self.rint(None, len(t) - 1)
+       return t[rintVal]
 
     def many(self,t,n):
-        u = {}
-        for i in range(1, n+1):
-            u[1+len(u)]=(any(t))
-        return u
+       u = []
+       for i in range(1, n + 1):
+         u.append(self.any(t))
+       return u
 
-    def map(self, t, fun, u):
-        u = {}
-        for k,v in t.items():
-            v,k = fun(v)
-            if u.get(k) is not None:
-                u[k] = v
-            else:
-                u[len(u)+1] = v
 
     def settings(self,s):
         t={}
@@ -109,11 +104,13 @@ class LIB:
                 options[k] = self.coerce(v)
         return options
 
-    def show(self,node,what,cols,nPlaces,lvl):
+    def show(self,node,what,cols,nPlaces,lvl=None):
         if node:
-            lvl = lvl if lvl else 0
-            print(("|.. ").rep(lvl))
-            print(self.o(self.last(self.last(node.data.rows).cells)) if not node.left else self.rnd(100*node.c))
-            self.show(node.left, what,cols, nPlaces, lvl+1)
-            self.show(node.right, what,cols,nPlaces, lvl+1)
-
+             lvl = lvl or 0
+             print("| " * lvl + str(len(node["data"].rows)) + " ", end="")
+             if ("left" not in node) or lvl == 0:
+                print(node["data"].stats("mid", node["data"].cols.y, nPlaces))
+             else:
+                print("")
+             self.show(node.get("left", None), what, cols, nPlaces, lvl+1)
+             self.show(node.get("right", None), what, cols, nPlaces, lvl+1)
