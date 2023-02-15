@@ -35,8 +35,8 @@ class DATA:
         return data
 
     def stats(self, nPlaces, what, cols = None):
-        print(self.rows)
-        print("Yesha")
+        # print(self.rows)
+        # print("Yesha")
         def fun(k, col):
             mid = getattr(col,what or "mid")
             rounded = round(float(mid()),nPlaces)
