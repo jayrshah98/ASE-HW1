@@ -124,12 +124,12 @@ class DATA:
     def repCols(self,cols):
         cols = copy(cols)
         for _,col in enumerate(cols):
-            col[len(col)-1] = col[0] + ":" + col[len(col)-1]
+            col[len(col)-1] = str(col[0]) + ":" + str(col[len(col)-1])
             for j in range(1,len(col)):
                 col[j-1] = col[j] 
             col.pop()
-        cols.insert(cols, 1, kap(cols[1], lambda k,v: "Num" + k))
-        cols[1][len(cols[1])] = "thingX"
+        cols.insert( 0, ("Num" + str(i) for i in range(len(cols[0]) )))
+        cols[0][len(cols[0])-1] = "thingX"
         return DATA(cols)
         
 
