@@ -54,10 +54,15 @@ class DATA:
         n,d = 0,0
         if cols == None:
             cols = self.cols.x
-        
+        # print("This is row 1")
+        # print(row1.cells)
+        # print("This is row2")
+        # print(row2.cells)
         for _,col in enumerate(cols):
             n = n + 1
+           
             d = d + col.dist(row1.cells[col.at], row2.cells[col.at])**config.the['p']
+            
         return (d/n)**(1/config.the['p'])
 
     def around(self,row1,rows=None,cols=None):
@@ -77,37 +82,30 @@ class DATA:
     def half(self,rows=None,cols=None,above=None):
 
         def project(row):
-            x, y = cosine(dist1(row,A), dist1(row,B), c)
+            x, y = cosine(dist(row,A), dist(row,B), c)
             row.x = row.x or x
             row.y = row.y or y
             return {"row": row, "x": x, "y": y}
 
-        def dist1(row1,row2):
+        def dist(row1,row2):
             return self.dist(row1,row2,cols)
 
         if rows == None:
             rows = self.rows
-        print("This function returns above")
-        print(above)
         A  = above or any(rows)
-        print("This function returns A")
-        print(A)
         B = self.furthest(A, rows)['row']
-        print("This function returns B")
-        print(B)
-        c  = dist1(A,B)
-        print("This function returns c")
-        print(c)
+        c  = dist(A,B)
 
         left, right = [], []
 
         res = [project(row) for row in rows]
         sorted_res = sorted(res, key=lambda x: x["x"])
         for n,tmp in enumerate(sorted_res):
-            if   (n+1) <= len(rows) // 2: 
+            if (n+1) <= len(rows) // 2: 
                 left.append(tmp["row"])
                 mid = tmp["row"]
-            else: right.append(tmp["row"])
+            else: 
+                right.append(tmp["row"])
         return left, right, A, B, mid, c
 
     def cluster(self, rows=None,cols=None, above=None):
@@ -126,7 +124,7 @@ class DATA:
             node["right"] = self.cluster(right,cols, node["B"])
         return node 
 
-    def furthest(self, row1, rows, cols=None):
+    def furthest(self, row1=None, rows=None, cols=None):
         t = self.around(row1,rows,cols)
         return t[len(t) - 1]
 

@@ -2,7 +2,7 @@ import re
 import math
 from LIB import LIB
 lib = LIB()
-rnd = lib.rnd
+
 
 class NUM:
     def __init__(self,at=0,txt=""):
@@ -31,28 +31,21 @@ class NUM:
         return 0 if (self.m2 < 0 or self.n < 2) else (self.m2/(self.n-1))**0.5
    
     def rnd(self,x,n):
-        return x if x == "?" else rnd(x,n)
-    
-    def dist(self,n1,n2):
-
-        if n1 == "?" and n2 == "?":
-            return 1
-        else: 
-            n1 = self.norm(n1)
-            n2 = self.norm(n2)
-            if n1 == "?" and n2 < .5: 
-                n1 = 1
-            else: 
-                n1 = 0
-            if n2 == "?" and n1 < .5: 
-                n2 = 1
-            else: 
-                n2 = 0 
-            
-            return abs(n1 - n2)
+        return x if x == "?" else lib.rnd(x,n)
 
     def norm(self,n):
-	    return n if n == '?' else (n-self.lo) / (self.hi - self.lo + 1e-32)
+        return n if n == "?" else (float(n) - self.lo) / (self.hi - self.lo + 1 + 10 ** (-32))
+    
+    def dist(self,n1,n2):
+        if n1 == "?" and n2 == "?":
+            return 1
+        n1, n2 = self.norm(n1), self.norm(n2)
+        if n1 == "?":
+            n1 = 1 if n2 < 0.5 else 0
+        if n2 == "?":
+            n2 = 1 if n1 < 0.5 else 0
+        return abs(n1 - n2)
+    
 
     
     
