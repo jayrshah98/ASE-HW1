@@ -15,10 +15,11 @@ class LIB:
         pass
 
     def rint(self, lo, hi):
-        return math.floor(0.5 + random.Random(lo,hi))
+        return math.floor(0.5 + self.rand(lo,hi))
 
-    def rand(self,lo =0, hi =1):
+    def rand(self,lo, hi):
         global seed
+        lo, hi = lo or 0, hi or 1
         seed = (16807 * seed) % 2147483647
         return lo + (hi-lo) * seed / 2147483647
 
@@ -67,19 +68,19 @@ class LIB:
     #     return
 
     def many(self,t,n, u):
-        u={}
-        for _ in range(1,n):
-            u[ 1 + len(u)] = self.any(t)
-        return u    
+        u = []
+        for i in range(1, n + 1):
+         u.append(self.any(t))
+        return u  
 
-    def map(self, t, fun, u):
-        u = {}
-        for k,v in t.items():
-            v,k = fun(v)
-            if u.get(k) is not None:
-                u[k] = v
-            else:
-                u[len(u)+1] = v
+    # def map(self, t, fun, u):
+    #     u = {}
+    #     for k,v in t.items():
+    #         v,k = fun(v)
+    #         if u.get(k) is not None:
+    #             u[k] = v
+    #         else:
+    #             u[len(u)+1] = v
 
     def transpose(self, t):
         u = []
@@ -90,7 +91,7 @@ class LIB:
         return u 
 
     def cosine(self, a,b,c):
-        x1 = (a*a + c*c - b*b) / (2*c + 0.00001)
+        x1 = (a*a + c*c - b*b) / (2**c)
         x2 = max(0,min(1,x1))
         y = (abs(a*a - x2*x2))**(0.5)
         return (x2, y)    
@@ -99,12 +100,6 @@ class LIB:
         rVal = self.rint(None, len(t)-1)
         return t[rVal]
     
-    def many(self,t,n):
-        u = []
-        for i in range(1, n+1):
-            u.append(any(t))
-        return u
-
     def settings(self,s):
         t={}
         res = re.findall("\n[\s]+[-][\S]+[\s]+[-][-]([\S]+)[^\n]+= ([\S]+)", s)
@@ -144,15 +139,18 @@ class LIB:
 
 
     def last(self,t):
-        return t[len(t)]
+        return t[-1]
 
-    def show(self,node,what,cols,nPlaces,lvl):
+    def show(self,node,what=None,cols=None,nPlaces=None,lvl=0):
         if node:
-            lvl = lvl if lvl else 0
-            print(("|.. ").rep(lvl))
-            print(self.o(self.last(self.last(node.data.rows).cells)) if not node.left else self.rnd(100*node.c))
-            self.show(node.left, what,cols, nPlaces, lvl+1)
-            self.show(node.right, what,cols,nPlaces, lvl+1)
+            lvl = lvl or 0
+            print("|.. " * lvl, end="")
+            if ("left" not in node):
+                print(self.last(self.last(node["data"].rows).cells))
+            else:
+                print(str(int(100 * node["C"])))
+            self.show(node.get("left", None), what,cols, nPlaces, lvl+1)
+            self.show(node.get("right", None), what,cols,nPlaces, lvl+1)
 
     def oo(self,t):
         td = t.__dict__

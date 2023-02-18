@@ -71,9 +71,9 @@ class LIB:
         return
     
     def cosine(self, a,b,c):
-        x1 = (a*a + c*c - b*b) / (2**c)
+        x1 = (a**2 + c**2 - b**2) / (2**c)
         x2 = max(0,min(1,x1))
-        y = (abs(a*a - x2*x2))**(0.5)
+        y = (abs(a**2 - x2**2))**(0.5)
         return (x2, y)
 
     def any(self, t):

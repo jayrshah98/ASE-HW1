@@ -1,19 +1,21 @@
 from SYM import SYM
 from NUM import NUM
-from DATA import DATA
+from DATA import DATA,repRows,repCols
 from LIB import LIB
 import config
 
 lib = LIB()
 sym = SYM()
 num = NUM()
-data = DATA(config.the["file"])
+#data = DATA()
+#data = DATA(config.the["file"])
 
 rnd = lib.rnd
 rand = lib.rand
 csv = lib.csv
 dofile = lib.dofile
 oo = lib.oo
+
 
 def sym_test():
     pairs = ["a","a","a","a","b","b","c"]
@@ -39,33 +41,33 @@ def copy_test():
     print("b4",t1,"\nafter",t2)
 
 def repcols_test():
-    t = data.repCols(dofile(config.the['file'])['cols'])
+    t = repCols(dofile(config.the['file'])['cols'])
     for col in t.cols.all:
-        print(vars(col))
+        oo(col)
     for row in t.rows:
-        print(vars(row))
+        oo(row)
 
 def reprows_test():
-    t=dofile(config.the["file"])
-    rows = data.repRows(t, lib.transpose(t["cols"]))
+    t = dofile(config.the["file"])
+    rows = repRows(t, lib.transpose(t["cols"]))
     for col in rows.cols.all:
         oo(col)
     for row in rows.rows:
         oo(row)
 
 def synonyms_test():
-    lib.show(data.repCols(dofile(config.the["file"]).cols).cluster())
+    lib.show(repCols(dofile(config.the["file"])["cols"]).cluster())
 
 def prototype_test():
     t = dofile(config.the["file"])
-    rows = data.repRows(t, lib.transpose(t["cols"]))
+    rows = repRows(t, lib.transpose(t["cols"]))
     lib.show(rows.cluster())
 
 def position_test():
     t=dofile(config.the["file"])
-    rows = data.repRows(t, lib.transpose(t["cols"]))
+    rows = repRows(t, lib.transpose(t["cols"]))
     rows.cluster()
-    data.repPlace(rows)
+    repPlace(rows)
 
 def every_test():
     data.repgrid(config.the["file"])
