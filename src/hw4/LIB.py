@@ -24,7 +24,7 @@ class LIB:
         return lo + (hi-lo) * seed / 2147483647
 
     def rnd(self, n, nPlaces = 3):
-        mult = 10**(nPlaces)
+        mult = math.pow(10,nPlaces)
         return math.floor(n * mult + 0.5) / mult   
 
     def coerce(self,s):
@@ -91,13 +91,13 @@ class LIB:
         return u 
 
     def cosine(self, a,b,c):
-        x1 = (a*a + c*c - b*b) / (2**c)
+        x1 = (a*a + c*c - b*b) / (2*c or 1)
         x2 = max(0,min(1,x1))
         y = (abs(a*a - x2*x2))**(0.5)
         return (x2, y)    
 
     def any(self, t):
-        rVal = self.rint(None, len(t)-1)
+        rVal = self.rint(0, len(t)-1)
         return t[rVal]
     
     def settings(self,s):

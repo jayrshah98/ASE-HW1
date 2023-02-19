@@ -15,6 +15,7 @@ many = lib.many
 any = lib.any
 dofile = lib.dofile
 copy = lib.copy
+last = lib.last
 
 class DATA:
     
@@ -54,10 +55,6 @@ class DATA:
         n,d = 0,0
         if cols == None:
             cols = self.cols.x
-        # print("This is row 1")
-        # print(row1.cells)
-        # print("This is row2")
-        # print(row2.cells)
         for _,col in enumerate(cols):
             n = n + 1
            
@@ -151,32 +148,32 @@ def repRows(t, rows):
             row.append("thingX")
         else:
             u = t["rows"][len(t["rows"]) - n]
-            row.append(u[-1])
+            row.append(u[len(u)-1])
     return DATA(rows)
 
-    # def repPlace(self, data, n, g, maxx, maxy, x, y, c):
-    #     n,g = 20,{}
-    #     for i in range(0,n):
-    #         g[i] = []
-    #         for j in range(0,n):
-    #             g[i][j]=" "
-    #     maxy=0
-    #     print("")
-    #     for r,row in enumerate(data.rows):
-    #         c = str(chr(64+r))
-    #         print(c, (row.cells[-1]))
-    #         x, y= row.x*n//1, row.y*n//1
-    #         maxy = math.max(maxy,y)
-    #         g[y][x] = c
-    #     print("")
-    #     for y in range(0, maxy):
-    #         self.oo(g[y])
+def repPlace(data):
+    n,g = 20,[]
+    for i in range(n+1):
+        g.append([])
+        for j in range(n+1):
+            g[i].append(" ")
+    maxy=0
+    print("")
+    for r,row in enumerate(data.rows):
+        c = chr(r+65)
+        print(c, last(row.cells))
+        x, y= int(row.x*n), int(row.y*n)
+        maxy = max(maxy,y)
+        g[y][x] = c
+    print("")
+    for y in range(maxy):
+        print("{" + "".join(g[y]) + "}")
 
-    # def repgrid(self, sFile):
-    #     t = lib.dofile(sFile) 
-    #     rows = self.repRows(t, lib.transpose(t.cols)) 
-    #     cols = self.repCols(t.cols)
-    #     lib.show(rows.cluster())
-    #     lib.show(cols.cluster())
-    #     self.repPlace(rows)
+def repgrid(sFile):
+    t = lib.dofile(sFile) 
+    rows = repRows(t, lib.transpose(t["cols"])) 
+    cols = repCols(t["cols"])
+    lib.show(rows.cluster())
+    lib.show(cols.cluster())
+    repPlace(rows)
         

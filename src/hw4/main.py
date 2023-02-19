@@ -37,8 +37,8 @@ eg("reprows","check reprows", reprows_test)
 eg("repcols","check repcols", repcols_test)
 eg("synonyms","check synonyms", synonyms_test)
 eg("prototype","check prototype", prototype_test)
-# eg("position","check position", [position_test])
-# eg("every","check every", every_test)
+eg("position","check position", position_test)
+eg("every","check every", every_test)
 
 
 

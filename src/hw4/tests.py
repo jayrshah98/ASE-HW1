@@ -1,6 +1,6 @@
 from SYM import SYM
 from NUM import NUM
-from DATA import DATA,repRows,repCols
+from DATA import DATA,repRows,repCols,repPlace,repgrid
 from LIB import LIB
 import config
 
@@ -8,7 +8,7 @@ lib = LIB()
 sym = SYM()
 num = NUM()
 #data = DATA()
-#data = DATA(config.the["file"])
+data = DATA(config.the["file"])
 
 rnd = lib.rnd
 rand = lib.rand
@@ -70,5 +70,5 @@ def position_test():
     repPlace(rows)
 
 def every_test():
-    data.repgrid(config.the["file"])
+    repgrid(config.the["file"])
 
