@@ -9,6 +9,10 @@ rand = lib.rand
 rint = lib.rint
 
 class UPDATE:
+
+    def __init__(self) -> None:
+        pass
+    
     def add(self,col,x,n=1):
     
         if x != '?':
@@ -36,7 +40,7 @@ class UPDATE:
                         col.has.append(x)
                     col.ok = False
 
-    def adds(self,col, t):
+    def adds(self, col, t):
         for value in t or []:
             self.add(col, value)
         return col            
