@@ -10,3 +10,5 @@ class SYM:
         self.most = 0
         self.isSym = True
         self.has = collections.defaultdict(int)
+        self.mode = None
+        self.isSym = True
