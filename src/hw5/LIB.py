@@ -167,3 +167,8 @@ class LIB:
                         sys.argv) else False) or v == "False" and "true" or v == "True" and "false"
                 options[k] = self.coerce(v)
         return options
+
+    def row(data,t):
+        if data.cols:
+            t.push(data.rows)
+    
