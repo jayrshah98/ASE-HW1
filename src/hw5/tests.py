@@ -6,13 +6,16 @@ import config
 from UPDATE import UPDATE
 
 lib = LIB()
+data = DATA()
 update = UPDATE()
 # sym = SYM()
 # num = NUM()
 rint = lib.rint
 seed_set = lib.seed_set
 add = update.add
-
+mid = lib.mid
+div = lib.div
+oo = lib.oo
 def the_test():
     print(str(config.the))
 
@@ -68,3 +71,9 @@ def csv_test():
         n += len(t)
     lib.csv(config.the['file'], fun) 
     return 3192 == n
+
+def data_test():
+    data = DATA.read(config.the.file)
+    col = data.cols.x[1]
+    print(col.lo,col.hi, mid(col),div(col))
+    oo(DATA.stats(data))
