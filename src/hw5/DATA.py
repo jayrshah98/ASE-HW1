@@ -1,25 +1,36 @@
-import math
+from UPDATE import UPDATE
 from LIB import LIB
+import math
 import config
+
+update = UPDATE()
 lib = LIB()
+
 kap = lib.kap
 cosine = lib.cosine
+
 class DATA:
 
     def __init__(self):
         self.rows = []
         self.cols = None
 
-    def read(sfile,data):
+    def read(self, sFile):
         data = DATA()
-        lib.csv(sfile, lambda t: lib.row(data,t))
 
-    def clone(self, rows = None):
-        data = DATA([self.cols.names])
-        for row in rows:
-            data.add(row)
+        def fun(t):
+            update.row(data, t)
+        lib.csv(sFile, fun)
         return data
 
+    def clone(self, data, ts = None):
+
+        d = DATA()
+        data1 = update.row(d, data.cols.names)
+        for _, t in enumerate(ts or []):
+            update.row(data1, t)
+        return data1
+    
     def stats(self, nPlaces, what, cols = None):
         def fun(k, col):
             mid = getattr(col,what or "mid")

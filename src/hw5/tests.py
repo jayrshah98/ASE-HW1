@@ -73,7 +73,15 @@ def csv_test():
     return 3192 == n
 
 def data_test():
-    data = DATA.read(config.the.file)
-    col = data.cols.x[1]
-    print(col.lo,col.hi, mid(col),div(col))
-    oo(DATA.stats(data))
+    d = DATA()
+    data = d.read(config.the['file'])
+    col = data.cols.x[1].col
+    print(col.lo, col.hi, lib.mid(col), lib.div(col))
+    (lib.stats(data, 2)) 
+
+def test_clone():
+    d = DATA()
+    data1 = d.read(config.the['file'])
+    data2 = data1.clone(data1.rows) 
+    lib.oo(lib.stats(data1, 2))
+    lib.oo(lib.stats(data2, 2))

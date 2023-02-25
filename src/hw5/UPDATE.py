@@ -12,7 +12,7 @@ class UPDATE:
 
     def __init__(self) -> None:
         pass
-    
+
     def add(self,col,x,n=1):
     
         if x != '?':
@@ -45,3 +45,13 @@ class UPDATE:
             self.add(col, value)
         return col            
 
+
+    def row(self, data, t):
+        if data.cols:
+            data.rows.append(t)
+            for cols in [data.cols.x, data.cols.y]:
+                for col in (cols): 
+                    self.add(col.col, t[col.col.at]) 
+        else: 
+            data.cols = COLS(t)  
+        return data
