@@ -1,18 +1,21 @@
 import math
 from LIB import LIB
+from UPDATE import UPDATE
 import config
 lib = LIB()
+upd = UPDATE()
 kap = lib.kap
 cosine = lib.cosine
+adds = upd.adds
 class DATA:
 
     def __init__(self):
         self.rows = []
         self.cols = None
 
-    def read(sfile,data):
+    def read(srcfile):
         data = DATA()
-        lib.csv(sfile, lambda t: lib.row(data,t))
+        lib.csv(srcfile,lambda t: upd.row(data, t))
 
     def clone(self, rows = None):
         data = DATA([self.cols.names])
@@ -111,3 +114,21 @@ class DATA:
             s1 = s1 - math.exp(col.w * (x-y) / len(ys))
             s2 = s2 - math.exp(col.w * (y-x) / len(ys))
         return s1/len(ys) < s2/len(ys)
+
+    def sway(self,rows=None,min=None,cols=None,above=None):
+
+        rows = rows if rows else self.rows
+
+        min  = min or len(rows) ** config.the['min']
+
+        cols = cols if cols else self.cols.x
+
+        node = {'data': self.clone(rows)} 
+
+        if len(rows) > 2 * min :
+            left, right, node["A"], node["B"], node["mid"], _ = self.half(rows,cols,above)
+            if self.better(node["B"],node["A"]):
+                left, right, node["A"], node["B"] = right, left, node["B"], node["A"]
+            node["left"]  = self.sway(left,  min, cols, node["A"]) 
+        
+        return node 

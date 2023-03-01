@@ -1,8 +1,8 @@
+import debugpy
 from COLS import COLS
 from LIB import LIB
 import random
 import config
-
 lib = LIB()
 
 rand = lib.rand
@@ -45,3 +45,13 @@ class UPDATE:
             self.add(col, value)
         return col            
 
+    def row(self, data, t):
+        print("data" , data.rows)
+        if data.cols:
+            data.rows.append(t)
+        for cols in [data.cols.x,data.cols.y]:
+            for col in cols:
+                self.add(col.col,t[col.col.at])
+        else:
+            data.cols = COLS(t)
+        return data

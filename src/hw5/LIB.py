@@ -5,10 +5,8 @@ import sys
 import json
 from pathlib import Path
 import config
-
 lo = float('inf') 
 hi = float('-inf')
-
 
 class LIB:
     def __init__(self):
@@ -130,7 +128,10 @@ class LIB:
         return t[max(1, min(len(t), p))]
 
     def mid(self, col):
-        return col.mode if hasattr(col, "isSym") else self.per(self.has(col), 0.5)
+        if hasattr(col, "isSym") and col.isSym:
+            return col.mode
+        else:
+            return self.per(self.has(col), 0.5)
 
     def div(self, col):
         if hasattr(col, "isSym"):
@@ -168,7 +169,5 @@ class LIB:
                 options[k] = self.coerce(v)
         return options
 
-    def row(data,t):
-        if data.cols:
-            t.push(data.rows)
+
     
