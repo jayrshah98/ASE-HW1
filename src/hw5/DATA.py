@@ -4,23 +4,23 @@ from NUM import NUM
 from SYM import SYM
 
 import math
+from UPDATE import UPDATE
 import config
 
 num = NUM()
 update = UPDATE()
 lib = LIB()
-
 kap = lib.kap
 cosine = lib.cosine
-
 class DATA:
 
     def __init__(self):
         self.rows = []
         self.cols = None
 
-    def read(self, sFile):
+    def read(sfile,data):
         data = DATA()
+        lib.csv(sfile, lambda t: lib.row(data,t))
 
         def fun(t):
             update.row(data, t)

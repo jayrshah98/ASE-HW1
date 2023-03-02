@@ -5,10 +5,8 @@ import sys
 import json
 from pathlib import Path
 import config
-
 lo = float('inf') 
 hi = float('-inf')
-
 
 class LIB:
     def __init__(self):

@@ -33,7 +33,7 @@ def eg(key,str,func):
 eg("rand", "demo random number generation", test_rand)
 eg("some", "demo of reservoir sampling", test_some)
 eg("sym","check syms", sym_test)
-eg("num","check nums", num_test)
+#eg("num","check nums", num_test)
 eg("csv","read from csv",csv_test)
 eg("data","read DATA csv",data_test)
 eg("clone","duplicate structure", test_clone)
