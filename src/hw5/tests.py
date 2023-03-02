@@ -9,7 +9,7 @@ lib = LIB()
 data = DATA()
 update = UPDATE()
 # sym = SYM()
-# num = NUM()
+num = NUM()
 rint = lib.rint
 seed_set = lib.seed_set
 add = update.add
@@ -82,6 +82,59 @@ def data_test():
 def test_clone():
     d = DATA()
     data1 = d.read(config.the['file'])
-    data2 = data1.clone(data1.rows) 
-    lib.oo(lib.stats(data1, 2))
-    lib.oo(lib.stats(data2, 2))
+    data2 = data1.clone(data1, data1.rows) 
+    (lib.stats(data1, 2))
+    (lib.stats(data2, 2))
+
+def test_cliffs():
+
+    assert(lib.cliffsDelta( {8,7,6,2,5,8,7,3}, {8,7,6,2,5,8,7,3}) == False, "1")
+    assert(lib.cliffsDelta( {8,7,6,2,5,8,7,3}, {9,9,7,8,10,9,6}) == True, "2") 
+
+    t1, t2= [], []
+
+    for _ in range(0, 1000):
+        (t1.append(lib.rand()))
+    for _ in range(0, 1000):
+        (t2.append(lib.rand() ** 0.5))
+
+    assert(lib.cliffsDelta(t1,t1)  == False, "3") 
+    assert(lib.cliffsDelta(t1,t2) == True, "4") 
+
+    diff, j = False, 1.0
+
+    while not diff :
+
+        def fun(x):
+            return x * j
+
+        t3 = map(fun, t1)
+        diff = lib.cliffsDelta(t1, list(t3))
+        print(">", lib.rnd(j), diff) 
+        j = j * 1.025 
+
+def test_dist():
+    d = DATA()
+    data = d.read(config.the['file'])
+  
+    for _,row in enumerate(data.rows):
+        update.add(num, d.dist(data, row, data.rows[0]))
+
+    print({"lo": num.lo, "hi": num.hi, "mid": lib.rnd(lib.mid(num)), "div": lib.rnd(lib.div())})
+
+
+def test_half():
+    d = DATA()
+    data = d.read(config.the['file'])
+
+    left, right, A, B, c = data.half(data)
+    print(len(left), len(right))
+
+    l, r = d.clone(data, left), d.clone(data, right)
+    print("l", lib.stats(l))
+    print("r", lib.stats(r))
+
+def test_tree():
+    d = DATA()
+    data = d.read(config.the['file'])
+    lib.show(data.tree())

@@ -74,8 +74,10 @@ class LIB:
             u[k or len(u)+1] = v
         return u
 
+    def any(self, t):
+        return t[self.rint(len(t)) - 1]
 
-    def many(self,t,n, u):
+    def many(self,t, n):
         u = []
         for i in range(1, n + 1):
          u.append(self.any(t))
@@ -122,14 +124,15 @@ class LIB:
 
     def has(self, col):
         if not hasattr(col, "isSym") and not hasattr(col, "ok"):
-            self.sorted(col.has) 
+            sorted(col.has) 
+        col.ok = True
         return col.has
 
     def per(self, t, p):
         p = math.floor((( p or .5 ) * len(t) ) + .5)
         return t[max(1, min(len(t), p))]
 
-    def mid(self, col):
+    def mid(self, col = None):
         return col.mode if hasattr(col, "isSym") else self.per(self.has(col), 0.5)
 
     def div(self, col):
@@ -168,7 +171,36 @@ class LIB:
                 options[k] = self.coerce(v)
         return options
 
-    def row(data,t):
+    def row(self, data,t):
         if data.cols:
             t.push(data.rows)
     
+    def cliffsDelta(self,ns1, ns2):
+
+        if len(ns1) > 256:
+            ns1 = self.many(ns1, 256)
+
+        if len(ns2) > 256:
+            ns2 = self.many(ns2, 256)
+
+        if len(ns1) > 10 * len(ns2):
+            ns2 = self.many(ns1, 10 * len(ns2))
+
+        if len(ns2) > 10 * len(ns1):
+            ns2 = self.many(ns2, 10 * len(ns1))
+
+        n, gt, lt = 0, 0, 0
+
+        for _,x in enumerate(ns1):
+            for _,y in enumerate(ns2):
+
+                n = n + 1
+                if x > y: gt = gt + 1 
+                if x < y: lt = lt + 1
+
+        return abs(lt - gt)/n > .147 
+
+    def diffs(self, nums1, nums2, the):
+        def func(k, nums):
+            return self.cliffsDelta(nums.has(), nums2[k].has()), nums.txt
+        return self.kap(nums1, func)

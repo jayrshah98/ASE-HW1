@@ -1,8 +1,12 @@
 from UPDATE import UPDATE
 from LIB import LIB
+from NUM import NUM
+from SYM import SYM
+
 import math
 import config
 
+num = NUM()
 update = UPDATE()
 lib = LIB()
 
@@ -31,23 +35,28 @@ class DATA:
             update.row(data1, t)
         return data1
     
-    def stats(self, nPlaces, what, cols = None):
-        def fun(k, col):
-            mid = getattr(col,what or "mid")
-            rounded = round(float(mid()),nPlaces)
-            return (rounded,col.txt)
-        return kap(cols or self.cols.y,fun)
+    def dist(self, data, t1, t2, cols = None):
+    
+        def dist1(col, x, y):
+            if x == "?" and y == "?":
+                return 1
+            if hasattr(col, "isSym"):
+                return 0 if x == y else 1
+            else:
+                x, y = num.norm( x), num.norm( y)
+                if x == "?":
+                    x = 1 if y < 0.5 else 1
+                if y == "?":
+                    y = 1 if x < 0.5 else 1
+                return abs(x - y)
 
-    def dist(self,row1,row2,cols=None):
-        n,d = 0,0
-        if cols == None:
-            cols = self.cols.x
-        for _,col in enumerate(cols):
-            n = n + 1
-           
-            d = d + col.dist(row1.cells[col.at], row2.cells[col.at])**config.the['p']
-            
-        return (d/n)**(1/config.the['p'])
+        d, n = 0, 1 / float("inf")
+        cols = cols or data.cols.x
+        for col in cols:
+            n += 1
+            d += dist1(col, t1[col.col.at], t2[col.col.at]) ** config.the['p']
+        return (d / n)**(1 / config.the['p'])
+
 
     def around(self,row1,rows=None,cols=None):
 
@@ -63,34 +72,34 @@ class DATA:
         return sorted(list(map(fun, rows)), key=lambda x: x['dist'])
 
 
-    def half(self,rows=None,cols=None,above=None):
-
-        def project(row):
-            x, y = cosine(dist(row,A), dist(row,B), c)
-            row.x = row.x or x
-            row.y = row.y or y
-            return {"row": row, "x": x, "y": y}
-
-        def dist(row1,row2):
-            return self.dist(row1,row2,cols)
-
-        if rows == None:
-            rows = self.rows
-        A  = above or any(rows)
-        B = self.furthest(A, rows)['row']
-        c  = dist(A,B)
-
+    def half(self, data, rows=None, cols=None, above=None):
         left, right = [], []
 
-        res = [project(row) for row in rows]
-        sorted_res = sorted(res, key=lambda x: x["x"])
-        for n,tmp in enumerate(sorted_res):
-            if (n+1) <= len(rows) // 2: 
-                left.append(tmp["row"])
-                mid = tmp["row"]
-            else: 
-                right.append(tmp["row"])
-        return left, right, A, B, mid, c
+        def gap(r1, r2):
+            return self.dist(data, r1, r2, cols)
+
+        def cos(a, b, c):
+            return (a ** 2 + c ** 2 - b ** 2) / (2 * c)
+
+        def proj(r):
+            return {'row': r, 'x': cos(gap(r, A), gap(r, B), c)}
+
+        rows = rows or self.rows
+        some = lib.many(rows, config.the["Halves"])
+        A = above if config.the["Reuse"] else any(some)
+        def fun(r):
+            return [{'row': r, "d":gap(r, A)}]
+        tmp  = sorted( map(fun, some), key=lambda x: x["d"])
+        far = tmp[(len(tmp)) * config.the["Far"]]
+        B, c = far["row"], far["d"]
+
+        for n, two in enumerate(sorted(map(proj, rows), key=lambda x: x["x"])):
+            if n + 1 <= (len(rows) / 2):
+                left.append(two["row"])
+            else:
+                right.append(two["row"])
+
+        return left, right, A, B, c
 
     def cluster(self, rows=None,cols=None, above=None):
 
@@ -108,10 +117,6 @@ class DATA:
             node["right"] = self.cluster(right,cols, node["B"])
         return node 
 
-    def furthest(self, row1=None, rows=None, cols=None):
-        t = self.around(row1,rows,cols)
-        return t[len(t) - 1]
-
 
     def better(self,row1,row2,s1,s2,ys,x,y):
         s1,s2,ys,x,y = 0,0,self.cols.y
@@ -122,3 +127,15 @@ class DATA:
             s1 = s1 - math.exp(col.w * (x-y) / len(ys))
             s2 = s2 - math.exp(col.w * (y-x) / len(ys))
         return s1/len(ys) < s2/len(ys)
+
+    def tree(self, rows=None, cols=None, above=None, here = None):
+        rows = rows if rows else self.rows
+        here = {"data": self.clone(self, rows)}
+
+        if (len(rows)) >= 2 * ((len(self.rows)) ** config.the['min']):
+            left, right, A, B = self.half(rows, cols, above)
+            here["left"] = self.tree(left, cols, A)
+            here["right"] = self.tree(right, cols, B)
+        return here
+    
+  
