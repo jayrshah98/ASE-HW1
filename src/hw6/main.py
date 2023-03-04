@@ -27,3 +27,8 @@ egs = {}
 def eg(key,str,func):
     egs[key] = func
     config.help = config.help + ("  -g  %s\t%s\n" % (key,str))
+
+eg("the","show settings", the_test)
+eg("num","check nums",num_test)
+eg("sym","check syms", sym_test)
+main(config.the, config.help, egs)
