@@ -45,9 +45,9 @@ def sym_test():
     print (lib.mid(sym), lib.rnd(lib.div(sym)), 2)
     return 1.38 == lib.rnd(lib.div(sym), 2)
 
-# def test_some():
-#     config.the["Max"] = 32
-#     num1 = NUM()
-#     for i in range(1,10000+1):
-#         add(num1,i)
-#     print(lib.has(num1))
+def some_test():
+    config.the["Max"] = 32
+    num1 = NUM()
+    for i in range(1,10000+1):
+        add(num1,i)
+    print(lib.has(num1))
