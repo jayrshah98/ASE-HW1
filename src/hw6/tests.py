@@ -2,6 +2,7 @@ import config
 from LIB import LIB
 from NUM import NUM
 from SYM import SYM
+from DATA import DATA
 lib = LIB()
 num = NUM()
 seed_set = lib.seed_set
@@ -51,3 +52,19 @@ def some_test():
     for i in range(1,10000+1):
         add(num1,i)
     print(lib.has(num1))
+
+def csv_test():
+    global n
+    n = 0
+    def fun(t):
+        global n
+        n += len(t)
+    lib.csv(config.the['file'], fun) 
+    return 3192 == n
+
+# def data_test():
+#     d = DATA()
+#     data = d.read(config.the['file'])
+#     col = data.cols.x[1].col
+#     print(col.lo, col.hi, lib.mid(col), lib.div(col))
+#     (lib.stats(data, 2)) 
