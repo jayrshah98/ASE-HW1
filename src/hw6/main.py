@@ -1,6 +1,5 @@
 import config 
 from tests import *
-from LIB import LIB
 import sys
 lib = LIB()
 sys.stdin.reconfigure(encoding='utf-8') 
@@ -33,4 +32,5 @@ eg("num","check nums",num_test)
 eg("sym","check syms", sym_test)
 eg("some","check some",some_test)
 eg("check_csv","check csv",csv_test)
+eg("data","check data",data_test)
 main(config.the, config.help, egs)

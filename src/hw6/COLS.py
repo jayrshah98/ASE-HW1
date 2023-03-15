@@ -1,5 +1,3 @@
-from NUM import NUM
-from SYM import SYM
 from COL import COL
 
 class COLS:

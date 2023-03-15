@@ -1,10 +1,6 @@
 import random
 import re
 import config
-from LIB import LIB
-lib = LIB()
-rint = lib.rint
-mid = lib.mid
 class NUM: 
     
     def __init__(self, n=0 , s="") -> None:

@@ -51,7 +51,7 @@ def some_test():
     num1 = NUM()
     for i in range(1,10000+1):
         add(num1,i)
-    print(lib.has(num1))
+    #print(lib.has(num1))
 
 def csv_test():
     global n
@@ -62,9 +62,9 @@ def csv_test():
     lib.csv(config.the['file'], fun) 
     return 3192 == n
 
-# def data_test():
-#     d = DATA()
-#     data = d.read(config.the['file'])
-#     col = data.cols.x[1].col
-#     print(col.lo, col.hi, lib.mid(col), lib.div(col))
-#     (lib.stats(data, 2)) 
+def data_test():
+    d = DATA()
+    data = d.read(config.the['file'])
+    col = data.cols.x[1].col
+    print(col.lo, col.hi, lib.mid(col), lib.div(col))
+    (lib.stats(data, 2)) 

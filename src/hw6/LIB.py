@@ -5,6 +5,7 @@ import sys
 import json
 from pathlib import Path
 import config
+from COLS import COLS
 
 lo = float('inf') 
 hi = float('-inf')
@@ -177,12 +178,16 @@ class LIB:
                     else:
                         col.has.append(x)
                     col.ok = False     
-    def adds(self, col, t):
+    def adds(self, col, t): 
         for value in t or []:
             self.add(col, value)
         return col
     
-    def row(data,t):
+    def row(self, data,t):
         if data.cols:
             t.push(data.rows)
     
+    def extend(self,range,n,s):
+        range.lo = min(n,range.lo)
+        range.hi = max(n,range.hi)
+        self.add(range.y,s)
