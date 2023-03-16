@@ -152,6 +152,15 @@ class LIB:
                 options[k] = self.coerce(v)
         return options
     
+    def many(self,t, n):
+        u = []
+        for i in range(1, n + 1):
+         u.append(self.any(t))
+        return u
+
+    def any(self, t):
+        return t[self.rint(len(t)) - 1]
+    
     def add(self,col,x,n=1):
     
         if x != '?':
@@ -178,6 +187,7 @@ class LIB:
                     else:
                         col.has.append(x)
                     col.ok = False     
+
     def adds(self, col, t): 
         for value in t or []:
             self.add(col, value)
@@ -191,3 +201,28 @@ class LIB:
         range.lo = min(n,range.lo)
         range.hi = max(n,range.hi)
         self.add(range.y,s)
+
+    def cliffsDelta(self,ns1, ns2):
+
+        if len(ns1) > 256:
+            ns1 = self.many(ns1, 256)
+
+        if len(ns2) > 256:
+            ns2 = self.many(ns2, 256)
+
+        if len(ns1) > 10 * len(ns2):
+            ns2 = self.many(ns1, 10 * len(ns2))
+
+        if len(ns2) > 10 * len(ns1):
+            ns2 = self.many(ns2, 10 * len(ns1))
+
+        n, gt, lt = 0, 0, 0
+
+        for _,x in enumerate(ns1):
+            for _,y in enumerate(ns2):
+
+                n = n + 1
+                if x > y: gt = gt + 1 
+                if x < y: lt = lt + 1
+
+        return abs(lt - gt)/n > .147

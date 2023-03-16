@@ -1,12 +1,16 @@
 from LIB import LIB
 from COLS import COLS
 from ROW import ROW
+import config
+from NUM import NUM
+num = NUM()
+row = ROW
 lib = LIB()
 csv = lib.csv
 class DATA:
     def __init__(self, src = None, cols=None, rows=None):
         self.rows = []
-        self.cols = None
+        self.cols = cols
         if type(src) == str:
             csv(src, self.add)
 
@@ -14,19 +18,23 @@ class DATA:
             for x in src:
                 self.add(x)
 
-    # def add(self, t):
-    #     if self.cols:
-    #         t = t if hasattr(t, 'cells') else ROW(t)
-    #         self.rows.append(t)
-    #         self.cols.add(t)
-    #     else:
-    #         self.cols = COLS(t)
+    def new(self):
+        return {"rows": [], "cols": None}
 
-    def clone(self, rows = None):
-        data = DATA([self.cols.names])
-        for row in rows:
-            data.add(row)
-        return data
+
+    def add(self,row):
+        for t in COLS.x, COLS.y:
+            for col in t:
+                col.add(row.cells[col.at])
+
+    def clone(self,data, ts):
+        #data = DATA(None, [self.cols.names], [r.getCells() for r in (ts if ts is not None else self.rows)])
+        data1 = DATA(None, data.cols.names,None)
+        for t in ts:
+            self.row(data1, ts)
+        # for _, t in enumerate(ts or []):
+        #     self.row(data, t)
+        return data1
     
     def read(self,sfile,data = None):
         data = DATA()
@@ -46,3 +54,28 @@ class DATA:
         else: 
             data.cols = COLS(t)  
         return data
+
+    def dist(self, data, t1, t2, cols = None):
+    
+        def dist1(col, x, y):
+            if x == "?" and y == "?":
+                return 1
+            if hasattr(col, "isSym"):
+                return 0 if x == y else 1
+            else:
+                x, y = num.norm(col,x), num.norm(col,y)
+                if x == "?":
+                    x = 1 if y < 0.5 else 1
+                if y == "?":
+                    y = 1 if x < 0.5 else 1
+
+                    
+                return abs(x - y)
+
+        d, n = 0, 1 / float("inf")
+        cols = cols or data.cols.x
+        for col in cols:
+            n += 1
+            d += dist1(col.col, t1[col.col.at], t2[col.col.at]) ** config.the['p']
+            
+        return (d / n)**(1 / config.the['p'])
