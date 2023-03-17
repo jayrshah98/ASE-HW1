@@ -112,3 +112,14 @@ def dist_test():
     for _,row in enumerate(data.rows):
         lib.add(num, d.dist(data, row, data.rows[0]))
     print({"lo": num.lo, "hi": num.hi, "mid": lib.rnd(lib.mid(num)), "div": lib.rnd(lib.div(num))})
+
+def test_half():
+    d = DATA()
+    data = d.read(config.the['file'])
+
+    left, right, A, B, c = data.half(data)
+    print(len(left), len(right))
+
+    l, r = d.clone(data, left), d.clone(data, right)
+    print("l", lib.stats(l))
+    print("r", lib.stats(r))

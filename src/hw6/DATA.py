@@ -28,18 +28,15 @@ class DATA:
                 col.add(row.cells[col.at])
 
     def clone(self,data, ts):
-        #data = DATA(None, [self.cols.names], [r.getCells() for r in (ts if ts is not None else self.rows)])
-        data1 = DATA(None, data.cols.names,None)
-        for t in ts:
-            self.row(data1, ts)
-        # for _, t in enumerate(ts or []):
-        #     self.row(data, t)
+        data1 = DATA(None,data.cols,None)
+        def fun(t):
+            self.row(data1, t)
+        for row in ts: 
+            fun(row)
         return data1
     
     def read(self,sfile,data = None):
         data = DATA()
-        lib.csv(sfile, lambda t: lib.row(data,t))
-
         def fun(t):
             self.row(data, t)
         lib.csv(sfile, fun)

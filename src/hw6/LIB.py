@@ -171,6 +171,7 @@ class LIB:
                     col.most = col.has[x]
                     col.mode = x
             else:
+                #print("x: ",x)
                 x = float(x)
                 col.lo = min(x,col.lo)
                 col.hi = max(x,col.hi)
