@@ -1,0 +1,149 @@
+ pass: sym
+✅ pass: num
+{'dump': False, 'go': 'all', 'help': False, 'seed': 937162211, 'file': '../../etc/data/hw4_repgrid_user1.csv', 'p': 2}
+✅ pass: the
+b4 {'a': 1, 'b': {'c': 2, 'd': [3]}} 
+after {'a': 1, 'b': {'c': 2, 'd': [1000]}}
+✅ pass: copy
+{'a': 'NUM', 'at': 0, 'hi': 5, 'id': 1669169627040, 'lo': 3, 'm2': 6.3999999999999995, 'mu': 3.6, 'n': 10, 'txt': 'LowSpeed:HighSpeed', 'w': 1}
+{'a': 'NUM', 'at': 1, 'hi': 5, 'id': 1669169626944, 'lo': 3, 'm2': 4.900000000000002, 'mu': 3.8999999999999995, 'n': 10, 'txt': 'LowQualityHandling:HighQualityHandling', 'w': 1}
+{'a': 'NUM', 'at': 2, 'hi': 5, 'id': 1669169626848, 'lo': 3, 'm2': 4.000000000000002, 'mu': 3.9999999999999996, 'n': 10, 'txt': 'Notsosafe:GoodSafety', 'w': 1}
+{'a': 'NUM', 'at': 3, 'hi': 5, 'id': 1669169626800, 'lo': 3, 'm2': 6.000000000000001, 'mu': 4.0, 'n': 10, 'txt': 'LessComfort:HighLevelofComfort', 'w': 1}
+{'a': 'NUM', 'at': 4, 'hi': 5, 'id': 1669169626896, 'lo': 3, 'm2': 6.0, 'mu': 4.0, 'n': 10, 'txt': 'BoringDesign:GoodDesign', 'w': 1}
+{'a': 'NUM', 'at': 5, 'hi': 5, 'id': 1669169626704, 'lo': 2, 'm2': 10.1, 'mu': 3.6999999999999997, 'n': 10, 'txt': 'Cheap:Expensive', 'w': 1}
+{'a': 'SYM', 'at': 6, 'has': defaultdict(<class 'int'>, {}), 'id': 1669169626752, 'mode': None, 'most': 0, 'n': 0, 'txt': 'thingX'}
+{'a': 'ROW', 'cells': [3, 4, 3, 3, 4, 3, 'Chevrolet'], 'id': 1669169626608, 'x': None, 'y': None}
+{'a': 'ROW', 'cells': [3, 3, 3, 4, 3, 4, 'Ford'], 'id': 1669169627088, 'x': None, 'y': None}
+{'a': 'ROW', 'cells': [3, 3, 5, 5, 4, 3, 'Volkswagen'], 'id': 1669164744512, 'x': None, 'y': None}
+{'a': 'ROW', 'cells': [4, 4, 4, 5, 5, 2, 'Subaru'], 'id': 1669169823808, 'x': None, 'y': None}
+{'a': 'ROW', 'cells': [5, 5, 4, 4, 5, 5, 'BMW'], 'id': 1669169823904, 'x': None, 'y': None}
+{'a': 'ROW', 'cells': [3, 3, 4, 5, 4, 4, 'Hyundai'], 'id': 1669169824000, 'x': None, 'y': None}
+{'a': 'ROW', 'cells': [3, 4, 4, 3, 3, 3, 'Toyota'], 'id': 1669169824096, 'x': None, 'y': None}
+{'a': 'ROW', 'cells': [3, 4, 4, 3, 3, 3, 'Honda'], 'id': 1669169824192, 'x': None, 'y': None}
+{'a': 'ROW', 'cells': [4, 4, 4, 4, 4, 5, 'Porsche'], 'id': 1669169824288, 'x': None, 'y': None}
+{'a': 'ROW', 'cells': [5, 5, 5, 4, 5, 5, 'Tesla'], 'id': 1669169824384, 'x': None, 'y': None}
+✅ pass: reprows
+{'a': 'NUM', 'at': 0, 'hi': 4, 'id': 1669169626896, 'lo': 3, 'm2': 1.3333333333333335, 'mu': 3.333333333333333, 'n': 6, 'txt': 'Num0', 'w': 1}
+{'a': 'NUM', 'at': 1, 'hi': 4, 'id': 1669169626704, 'lo': 3, 'm2': 1.333333333333333, 'mu': 3.3333333333333335, 'n': 6, 'txt': 'Num1', 'w': 1}
+{'a': 'NUM', 'at': 2, 'hi': 5, 'id': 1669169626608, 'lo': 3, 'm2': 4.833333333333334, 'mu': 3.8333333333333335, 'n': 6, 'txt': 'Num2', 'w': 1}
+{'a': 'NUM', 'at': 3, 'hi': 5, 'id': 1669169626560, 'lo': 2, 'm2': 6.0, 'mu': 4.0, 'n': 6, 'txt': 'Num3', 'w': 1}       
+{'a': 'NUM', 'at': 4, 'hi': 5, 'id': 1669169627088, 'lo': 4, 'm2': 1.3333333333333344, 'mu': 4.666666666666666, 'n': 6, 'txt': 'Num4', 'w': 1}
+{'a': 'NUM', 'at': 5, 'hi': 5, 'id': 1669169626992, 'lo': 3, 'm2': 2.833333333333333, 'mu': 3.833333333333333, 'n': 6, 'txt': 'Num5', 'w': 1}
+{'a': 'NUM', 'at': 6, 'hi': 4, 'id': 1669164744512, 'lo': 3, 'm2': 1.333333333333333, 'mu': 3.333333333333333, 'n': 6, 'txt': 'Num6', 'w': 1}
+{'a': 'NUM', 'at': 7, 'hi': 4, 'id': 1669164744560, 'lo': 3, 'm2': 1.333333333333333, 'mu': 3.333333333333333, 'n': 6, 'txt': 'Num7', 'w': 1}
+{'a': 'NUM', 'at': 8, 'hi': 5, 'id': 1669169359520, 'lo': 4, 'm2': 0.833333333333333, 'mu': 4.166666666666667, 'n': 6, 'txt': 'Num8', 'w': 1}
+{'a': 'NUM', 'at': 9, 'hi': 5, 'id': 1669169360480, 'lo': 4, 'm2': 0.8333333333333335, 'mu': 4.833333333333333, 'n': 6, 'txt': 'Num9', 'w': 1}
+{'a': 'SYM', 'at': 10, 'has': defaultdict(<class 'int'>, {}), 'id': 1669169356592, 'mode': None, 'most': 0, 'n': 0, 'txt': 'thingX'}
+{'a': 'ROW', 'cells': [3, 3, 3, 4, 5, 3, 3, 3, 4, 5, 'LowSpeed:HighSpeed'], 'id': 1669169626800, 'x': None, 'y': None}  
+{'a': 'ROW', 'cells': [4, 3, 3, 4, 5, 3, 4, 4, 4, 5, 'LowQualityHandling:HighQualityHandling'], 'id': 1669169824384, 'x': None, 'y': None}
+{'a': 'ROW', 'cells': [3, 3, 5, 4, 4, 4, 4, 4, 4, 5, 'Notsosafe:GoodSafety'], 'id': 1669169823808, 'x': None, 'y': None}
+{'a': 'ROW', 'cells': [3, 4, 5, 5, 4, 5, 3, 3, 4, 4, 'LessComfort:HighLevelofComfort'], 'id': 1669169823904, 'x': None, 'y': None}
+{'a': 'ROW', 'cells': [4, 3, 4, 5, 5, 4, 3, 3, 4, 5, 'BoringDesign:GoodDesign'], 'id': 1669169824000, 'x': None, 'y': None}
+{'a': 'ROW', 'cells': [3, 4, 3, 2, 5, 4, 3, 3, 5, 5, 'Cheap:Expensive'], 'id': 1669169824096, 'x': None, 'y': None}     
+✅ pass: repcols
+90
+|.. 72
+|.. |.. LessComfort:HighLevelofComfort
+|.. |.. 80
+|.. |.. |.. Cheap:Expensive
+|.. |.. |.. Notsosafe:GoodSafety
+|.. 54
+|.. |.. LowQualityHandling:HighQualityHandling
+|.. |.. 40
+|.. |.. |.. LowSpeed:HighSpeed
+|.. |.. |.. BoringDesign:GoodDesign
+✅ pass: synonyms
+63
+|.. 57
+|.. |.. 43
+|.. |.. |.. Subaru
+|.. |.. |.. Volkswagen
+|.. |.. 40
+|.. |.. |.. Tesla
+|.. |.. |.. 35
+|.. |.. |.. |.. Porsche
+|.. |.. |.. |.. BMW
+|.. 37
+|.. |.. 35
+|.. |.. |.. Ford
+|.. |.. |.. Hyundai
+|.. |.. 28
+|.. |.. |.. Toyota
+|.. |.. |.. 28
+|.. |.. |.. |.. Chevrolet
+|.. |.. |.. |.. Honda
+✅ pass: prototype
+
+A Chevrolet
+B Ford
+C Volkswagen
+D Subaru
+E BMW
+F Hyundai
+G Toyota
+H Honda
+I Porsche
+J Tesla
+
+{E             B      }
+{                     }
+{      I              }
+{                     }
+{    J                }
+{                     }
+{           F         }
+{            H        }
+{                     }
+✅ pass: position
+72
+|.. 51
+|.. |.. 0
+|.. |.. |.. Toyota
+|.. |.. |.. Honda
+|.. |.. 51
+|.. |.. |.. Hyundai
+|.. |.. |.. 37
+|.. |.. |.. |.. Chevrolet
+|.. |.. |.. |.. Ford
+|.. 70
+|.. |.. 20
+|.. |.. |.. Tesla
+|.. |.. |.. BMW
+|.. |.. 49
+|.. |.. |.. Volkswagen
+|.. |.. |.. 50
+|.. |.. |.. |.. Porsche
+|.. |.. |.. |.. Subaru
+90
+|.. 54
+|.. |.. LowQualityHandling:HighQualityHandling
+|.. |.. 40
+|.. |.. |.. LowSpeed:HighSpeed
+|.. |.. |.. BoringDesign:GoodDesign
+|.. 72
+|.. |.. LessComfort:HighLevelofComfort
+|.. |.. 80
+|.. |.. |.. Cheap:Expensive
+|.. |.. |.. Notsosafe:GoodSafety
+
+A Chevrolet
+B Ford
+C Volkswagen
+D Subaru
+E BMW
+F Hyundai
+G Toyota
+H Honda
+I Porsche
+J Tesla
+
+{H             J      }
+{                     }
+{                     }
+{             E       }
+{       I             }
+{ A                   }
+{                     }
+{     B               }
+{                     }
+✅ pass: every
