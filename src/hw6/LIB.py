@@ -5,26 +5,25 @@ import sys
 import json
 from pathlib import Path
 import config
+import csv
 from COLS import COLS
 
 lo = float('inf') 
 hi = float('-inf')
 
-
+seed = 937162211
 class LIB:
     def __init__(self):
-        self.seed = 937162211
+        pass
 
     def rint(self, lo=None, hi=None):
         return math.floor(0.5 + self.rand(lo,hi))
-    
-    def seed_set(self,v):
-        self.seed = v
 
     def rand(self,lo=None, hi=None):
         lo, hi = lo or 0, hi or 1
-        self.seed = (16807 * self.seed) % 2147483647
-        return lo + (hi-lo) * self.seed / 2147483647
+        global seed
+        seed = (16807 * seed) % 2147483647
+        return lo + (hi-lo) * seed / 2147483647
 
     def rnd(self, n, nPlaces = 3):
         mult = 10**(nPlaces)
@@ -50,17 +49,10 @@ class LIB:
         return result
 
     def csv(self,sFilename,fun):
-        filePath = Path(sFilename)
-        filePath = filePath.absolute()
-        filePath = filePath.resolve()
-        f = open(filePath,"r")
-        readLines = f.readlines()
-        f.close()
-        for line in readLines:
-            t = []
-            for s1 in re.findall("([^,]+)", line):
-                t.append(self.coerce(s1))
-            fun(t)
+        with open(sFilename, mode='r') as file:
+            csvFile = csv.reader(file)
+            for line in csvFile:
+                fun(line)
     
     def kap(self, t, fun):
         u = {}
@@ -105,13 +97,16 @@ class LIB:
         print(dict(sorted(td.items())))
 
     def has(self, col):
-        if not hasattr(col, "isSym") and not hasattr(col, "ok"):
-            self.sorted(col.has) 
+        if isinstance(col.has, dict):
+            col.has = dict(sorted(col.has.items(), key = lambda item: item[1]))
+        else:
+            col.has.sort()
+        col.ok = True
         return col.has
 
     def per(self, t, p):
-        p = math.floor((( p or .5 ) * len(t) ) + .5)
-        return t[max(1, min(len(t), p))]
+        p = math.floor((( p or .5 ) * len(t) ))
+        return t[max(0, min(len(t)-1, p))]
 
     def mid(self, col):
         return col.mode if hasattr(col, "isSym") else self.per(self.has(col), 0.5)
@@ -125,15 +120,14 @@ class LIB:
         else:
             return (self.per(self.has(col),.9) - self.per(self.has(col), .1)) /2.58
 
-    def stats(self, data, nPlaces, fun = None, cols = None):
-        cols = cols if cols else data.cols.y
-
-        def fun(col):
-            return self.rnd((fun if fun else self.mid)(col), nPlaces), col.txt
-
-        tmp = self.kap(cols, fun)
+    def stats(self, data, nPlaces = 2, fun = None, cols = None):
+        cols = cols or data.cols.y
+        def callBack(k, col):
+            col = col.col
+            return round((fun or self.mid)(col), nPlaces), col.txt
+        tmp = self.kap(cols, callBack)
         tmp["N"] = len(data.rows)
-        return tmp, map(self.mid, cols)
+        return tmp
     
     def settings(self,s):
         t={}
@@ -161,42 +155,42 @@ class LIB:
     def any(self, t):
         return t[self.rint(len(t)) - 1]
     
-    def add(self,col,x,n=1):
+    # def add(self,col,x,n=1):
     
-        if x != '?':
-            col.n += n
-            if hasattr(col, "isSym") and col.isSym:
-                col.has[x] = n + (col.has.get(x, 0))
-                if col.has[x] > col.most:
-                    col.most = col.has[x]
-                    col.mode = x
-            else:
-                #print("x: ",x)
-                x = float(x)
-                col.lo = min(x,col.lo)
-                col.hi = max(x,col.hi)
-                all = len(col.has)
-                if all < config.the["Max"]:
-                    pos = all + 1
-                elif random.random() < config.the["Max"] / col.n:
-                    pos = self.rint(1,11)
-                else:
-                    pos = None
-                if pos:
-                    if isinstance(col.has,dict):
-                        col.has[pos] = x
-                    else:
-                        col.has.append(x)
-                    col.ok = False     
+    #     if x != '?':
+    #         col.n += n
+    #         if hasattr(col, "isSym") and col.isSym:
+    #             col.has[x] = n + (col.has.get(x, 0))
+    #             if col.has[x] > col.most:
+    #                 col.most = col.has[x]
+    #                 col.mode = x
+    #         else:
+    #             #print("x: ",x)
+    #             x = float(x)
+    #             col.lo = min(x,col.lo)
+    #             col.hi = max(x,col.hi)
+    #             all = len(col.has)
+    #             if all < config.the["Max"]:
+    #                 pos = all + 1
+    #             elif random.random() < config.the["Max"] / col.n:
+    #                 pos = self.rint(1,11)
+    #             else:
+    #                 pos = None
+    #             if pos:
+    #                 if isinstance(col.has,dict):
+    #                     col.has[pos] = x
+    #                 else:
+    #                     col.has.append(x)
+    #                 col.ok = False     
 
-    def adds(self, col, t): 
-        for value in t or []:
-            self.add(col, value)
-        return col
+    # def adds(self, col, t): 
+    #     for value in t or []:
+    #         self.add(col, value)
+    #     return col
     
-    def row(self, data,t):
-        if data.cols:
-            t.push(data.rows)
+    # def row(self, data,t):
+    #     if data.cols:
+    #         t.push(data.rows)
     
     def extend(self,range,n,s):
         range.lo = min(n,range.lo)

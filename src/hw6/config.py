@@ -13,7 +13,7 @@ the = {
     'Max': 512,
     'p' : 2,
     'rest' : 4,
-    'Reuse' : True,
+    'Reuse' : False,
     'seed': 937162211
 }
 help = """
@@ -35,6 +35,6 @@ OPTIONS:
   -M  --Max     numbers                      = 512
   -p  --p       dist coefficient             = 2
   -r  --rest    how many of rest to sample   = 4
-  -R  --Reuse   child splits reuse a parent pole = true
+  -R  --Reuse   child splits reuse a parent pole = false
   -s  --seed    random number seed           = 937162211
 """
