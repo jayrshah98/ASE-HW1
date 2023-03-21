@@ -114,6 +114,6 @@ def half_test():
     left, right, A, B, c = data.half(data)
     print(len(left), len(right))
 
-    l, r = d.clone(data, left), d.clone(data, right)
+    l, r = data.clone(data, left), data.clone(data, right)
     print("l", lib.stats(l))
     print("r", lib.stats(r))

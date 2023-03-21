@@ -118,11 +118,10 @@ class DATA:
 
         rows = rows or self.rows
         some = lib.many(rows, config.the["Halves"])
-        A = above if config.the["Reuse"] else any(some)
-        def fun(r):
-            return [{'row': r, "d":gap(r, A)}]
-        tmp  = sorted( map(fun, some), key=lambda x: x["d"])
-        far = tmp[(len(tmp)) * config.the["Far"]]
+        A = above if config.the["Reuse"] else lib.any(some)
+        print("A:",A)
+        tmp = sorted([{"row": r, "d": gap(r, A)} for r in some], key=lambda x: x["d"])
+        far = tmp[int((len(tmp)) * config.the["Far"])]
         B, c = far["row"], far["d"]
 
         for n, two in enumerate(sorted(map(proj, rows), key=lambda x: x["x"])):
@@ -131,4 +130,4 @@ class DATA:
             else:
                 right.append(two["row"])
 
-        return left, right, A, B, 
+        return left, right, A, B,c 
