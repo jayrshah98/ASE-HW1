@@ -1,0 +1,22 @@
+local _ = ""
+return {
+      domain="dissementian platforms",
+      cols={   
+            {'LowSpeed',2,2,3,3,5,4,3,3,5,4, 'HighSpeed'},
+            {'LowQualityHandling',2,2,4,3,4,2,3,3,4,4, 'HighQualityHandling'},
+            {'Notsosafe',2,2,4,2,4,3,3,3,4,5, 'GoodSafety'},
+            {'LessComfort' ,2,3,4,3,4,4,3,3,4,5, 'HighLevelofComfort'},
+            {'BoringDesign',3,2,4,3,4,4,3,2,5,5, 'GoodDesign'},
+            {'Cheap',2,3,3,2,5,3,2,2,5,5, 'Expensive'}},
+      rows={                      
+            { _, _, _, _, _, _, _, _, _, 'Tesla'},
+            { _, _, _, _, _, _, _, _, 'Porsche'},
+            { _, _, _, _, _, _, _, 'Honda'},
+            { _, _, _, _, _, _, 'Toyota'},
+            { _, _, _, _, _,  'Hyundai'},
+            { _, _, _, _,  'BMW'},
+            { _, _, _,  'Subaru'},
+            { _, _,  'Volkswagen'},
+            { _, 'Ford'},
+            {'Chevrolet'}}
+}

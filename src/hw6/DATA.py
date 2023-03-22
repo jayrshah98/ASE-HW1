@@ -9,7 +9,7 @@ num = NUM()
 row = ROW
 lib = LIB()
 class DATA:
-    def __init__(self, src = None, cols=None, rows=None):
+    def __init__(self, src = None, rows=None):
         rows = {}
         cols = []
         add = lambda x: update.row(self,x)
@@ -35,11 +35,9 @@ class DATA:
     #             col.add(row.cells[col.at])
 
     def clone(self,data, ts):
-        data1 = DATA(None,data.cols,ts)
-        def fun(t):
+        data1 = update.row(DATA(), data.cols.names)
+        for t in (ts or []):
             update.row(data1, t)
-        for row in ts: 
-            fun(row)
         return data1
     
     def read(self,sfile,data = None):
@@ -119,7 +117,6 @@ class DATA:
         rows = rows or self.rows
         some = lib.many(rows, config.the["Halves"])
         A = above if config.the["Reuse"] else lib.any(some)
-        print("A:",A)
         tmp = sorted([{"row": r, "d": gap(r, A)} for r in some], key=lambda x: x["d"])
         far = tmp[int((len(tmp)) * config.the["Far"])]
         B, c = far["row"], far["d"]
@@ -131,3 +128,24 @@ class DATA:
                 right.append(two["row"])
 
         return left, right, A, B,c 
+    
+
+    def tree(self,data,rows = None,cols = None,above = None):
+        rows = rows or data.rows
+        data1 = DATA(data,rows)
+        here = {"data":data1}
+        if len(rows)>=2*(len(data.rows) ** config.the['min']):
+            left, right, A, B, _= self.half(data, rows, cols, above)
+            here["left"] = self.tree(data, left, cols, A)
+            here["right"] = self.tree(data, right, cols, B) 
+        return here
+    
+    def showTree(self,tree,lvl=0):
+        if tree:
+            print("{}[{}]".format("|.. " * lvl, len(tree["data"].rows)), end="")
+            if lvl == 0 or not "left" in tree:
+                print(lib.stats(tree["data"]))
+            else:
+                print("")
+                self.showTree(tree["left"] if "left" in tree else None, lvl + 1)
+                self.showTree(tree["right"] if "right" in tree else None, lvl + 1)

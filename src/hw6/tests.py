@@ -68,8 +68,8 @@ def data_test():
 def clone_test():
     data1 = DATA(config.the['file'])
     data2 = data1.clone(data1,data1.rows) 
-    (lib.stats(data1, 2))
-    (lib.stats(data2, 2))
+    print("data1:",lib.stats(data1, 2))
+    print("data2:",lib.stats(data2, 2))
 
 
 def cliffs_test():
@@ -101,11 +101,9 @@ def cliffs_test():
 
 
 def dist_test():
-    d = DATA()
-    data = d.read(config.the['file'])
-  
+    data = DATA(config.the['file'])
     for _,row in enumerate(data.rows):
-        update.add(num, d.dist(data, row, data.rows[0]))
+        update.add(num, data.dist(data, row, data.rows[0]))
     print({"lo": num.lo, "hi": num.hi, "mid": lib.rnd(lib.mid(num)), "div": lib.rnd(lib.div(num))})
 
 def half_test():
@@ -117,3 +115,7 @@ def half_test():
     l, r = data.clone(data, left), data.clone(data, right)
     print("l", lib.stats(l))
     print("r", lib.stats(r))
+
+def tree_test():
+    data = DATA(config.the['file'])
+    data.showTree(data.tree(data))

@@ -37,5 +37,5 @@ eg("clone","check clone",clone_test)
 eg("cliffs","check cliffs",cliffs_test)
 eg("dist","check distance",dist_test)
 eg("half","check half",half_test)
-
+eg("tree","check tree",tree_test)
 main(config.the, config.help, egs)

@@ -102,13 +102,16 @@ class LIB:
         else:
             col.has.sort()
         col.ok = True
+        
         return col.has
 
     def per(self, t, p):
+        #print("In per: ",t)
         p = math.floor((( p or .5 ) * len(t) ))
         return t[max(0, min(len(t)-1, p))]
 
     def mid(self, col):
+        #print("In mid: ", col.has)
         return col.mode if hasattr(col, "isSym") else self.per(self.has(col), 0.5)
 
     def div(self, col):
