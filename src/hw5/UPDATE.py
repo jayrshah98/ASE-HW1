@@ -1,8 +1,8 @@
-import debugpy
 from COLS import COLS
 from LIB import LIB
 import random
 import config
+
 lib = LIB()
 
 rand = lib.rand
