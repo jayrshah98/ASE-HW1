@@ -126,26 +126,29 @@ class DATA:
                 left.append(two["row"])
             else:
                 right.append(two["row"])
-
-        return left, right, A, B,c 
+        evals = 1 if (hasattr(config.the, "Reuse") and above) else 2
+        return left, right, A, B,c, evals
     
 
     def tree(self,data,rows = None,cols = None,above = None):
         rows = rows or data.rows
-        data1 = DATA(data,rows)
-        here = {"data":data1}
+        here = {"data" : DATA(data, rows)}
+        left, right, A, B, _,_= self.half(data, rows, cols, above)
+        # print("l", lib.stats(left))
+        # print("r", lib.stats(right))
         if len(rows)>=2*(len(data.rows) ** config.the['min']):
-            left, right, A, B, _= self.half(data, rows, cols, above)
+            left, right, A, B, _,_= self.half(data, rows, cols, above)
             here["left"] = self.tree(data, left, cols, A)
             here["right"] = self.tree(data, right, cols, B) 
         return here
     
     def showTree(self,tree,lvl=0):
+        #print("lem",len(tree["data"].rows))
         if tree:
-            print("{}[{}]".format("|.. " * lvl, len(tree["data"].rows)), end="")
+            print("len:{}[{}]".format("|.. " * lvl, len(tree["data"].rows)), end="")
             if lvl == 0 or not "left" in tree:
                 print(lib.stats(tree["data"]))
             else:
-                print("")
+                print("else")
                 self.showTree(tree["left"] if "left" in tree else None, lvl + 1)
                 self.showTree(tree["right"] if "right" in tree else None, lvl + 1)

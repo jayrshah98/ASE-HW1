@@ -56,6 +56,7 @@ class LIB:
     
     def kap(self, t, fun):
         u = {}
+        print("t:",t)
         for k, v in enumerate(t):
             v, k = fun(k, v)
             u[k or len(u)+1] = v
@@ -126,6 +127,7 @@ class LIB:
     def stats(self, data, nPlaces = 2, fun = None, cols = None):
         cols = cols or data.cols.y
         def callBack(k, col):
+            #print("In callback:",k," ," ,col.col.has)
             col = col.col
             return round((fun or self.mid)(col), nPlaces), col.txt
         tmp = self.kap(cols, callBack)
@@ -158,42 +160,6 @@ class LIB:
     def any(self, t):
         return t[self.rint(len(t)) - 1]
     
-    # def add(self,col,x,n=1):
-    
-    #     if x != '?':
-    #         col.n += n
-    #         if hasattr(col, "isSym") and col.isSym:
-    #             col.has[x] = n + (col.has.get(x, 0))
-    #             if col.has[x] > col.most:
-    #                 col.most = col.has[x]
-    #                 col.mode = x
-    #         else:
-    #             #print("x: ",x)
-    #             x = float(x)
-    #             col.lo = min(x,col.lo)
-    #             col.hi = max(x,col.hi)
-    #             all = len(col.has)
-    #             if all < config.the["Max"]:
-    #                 pos = all + 1
-    #             elif random.random() < config.the["Max"] / col.n:
-    #                 pos = self.rint(1,11)
-    #             else:
-    #                 pos = None
-    #             if pos:
-    #                 if isinstance(col.has,dict):
-    #                     col.has[pos] = x
-    #                 else:
-    #                     col.has.append(x)
-    #                 col.ok = False     
-
-    # def adds(self, col, t): 
-    #     for value in t or []:
-    #         self.add(col, value)
-    #     return col
-    
-    # def row(self, data,t):
-    #     if data.cols:
-    #         t.push(data.rows)
     
     def extend(self,range,n,s):
         range.lo = min(n,range.lo)

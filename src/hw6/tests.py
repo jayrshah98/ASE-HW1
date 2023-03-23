@@ -109,7 +109,7 @@ def dist_test():
 def half_test():
     data = DATA(config.the['file'])
 
-    left, right, A, B, c = data.half(data)
+    left, right, A, B, c,evals = data.half(data)
     print(len(left), len(right))
 
     l, r = data.clone(data, left), data.clone(data, right)
@@ -118,4 +118,4 @@ def half_test():
 
 def tree_test():
     data = DATA(config.the['file'])
-    data.showTree(data.tree(data))
+    data.showTree(data.tree(data),"mid",data.cols.y,1)
