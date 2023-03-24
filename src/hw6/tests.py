@@ -151,3 +151,18 @@ def bins_test():
                   range.hi,
                   round(lib.value(range.y.has, len(best.rows), len(rest.rows), "best")),
                   range.y.has)
+            
+
+def xpln_test():
+    data = DATA(config.the['file'])
+    best, rest, evals = OPTIMIZATION.sway(data)
+    rule, _ = discretization.xpln(data, best, rest)
+    print("\n-----------\nexplain=", discretization.showRule(rule))
+    data1 = DATA(data, discretization.selects(rule, data.rows))
+    print("all        ", lib.stats(data), lib.stats(data, None, lib.div))
+    print(f"sway with   {evals} evals", lib.stats(best), lib.stats(best, None, lib.div))
+    print(f"xpln on     {evals} evals", lib.stats(data1), lib.stats(data1, None, lib.div))
+    top, _ = lib.betters(data, len(best.rows))
+    top = DATA(data, top)
+    print(f"sort with {len(data.rows)} evals", lib.stats(top), lib.stats(top, None, lib.div))
+

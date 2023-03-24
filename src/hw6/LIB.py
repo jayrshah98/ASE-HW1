@@ -58,9 +58,15 @@ class LIB:
     
     def kap(self, t, fun):
         u = {}
-        for k, v in enumerate(t):
-            v, k = fun(k, v)
-            u[k or len(u)+1] = v
+
+        if isinstance(t, list):
+            items = enumerate(t)
+        else:
+            items = t.items()
+
+        for k, v in items:
+                v, k = fun(k, v)
+                u[k or len(u)+1] = v
         return u
 
     def show(self,node,what=None,cols=None,nPlaces=None,lvl=0):
@@ -188,6 +194,10 @@ class LIB:
 
         return s1/len(ys) < s2 / len(ys)
     
+
+    def betters(self,data,n):
+        tmp=sorted(data.rows, key=lambda row: self.better(data,row, data.rows[data.rows.index(row)-1]))
+        return  n and tmp[0:n], tmp[n+1:]  or tmp
 
     def diffs(self,nums1, nums2):
         def kap(nums, fun):
