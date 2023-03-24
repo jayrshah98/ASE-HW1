@@ -1,0 +1,132 @@
+{'bins': 16, 'cliffs': 0.147, 'd': 0.35, 'file': '../../etc/data/auto93.csv', 'far': 0.95, 'go': 'all', 'help': False, 'Halves': 512, 'min': 0.5, 'Max': 512, 'p': 2, 'rest': 4, 'Reuse': False, 'seed': 937162211, 'Far': 0.95}
+✅ pass: the
+1 0.51 0.3
+2 0.26 0.32
+✅ pass: num
+a 1.379 2
+✅ pass: sym
+✅ pass: some
+✅ pass: check_csv
+68.0 455.0 151.0 100.7751937984496
+{'Lbs-': 2807.0, 'Acc+': 15.5, 'Mpg+': 20.0, 'N': 398}
+✅ pass: data
+data1: {'Lbs-': 2807.0, 'Acc+': 15.5, 'Mpg+': 20.0, 'N': 398}
+data2: {'Lbs-': 2807.0, 'Acc+': 15.5, 'Mpg+': 20.0, 'N': 398}
+✅ pass: clone
+> 1.0 False
+> 1.025 False
+> 1.051 False
+> 1.077 False
+> 1.104 False
+> 1.131 False
+> 1.16 True
+✅ pass: cliffs
+{'lo': 0.0, 'hi': 0.8746495688429434, 'mid': 0.548, 'div': 0.258}
+✅ pass: dist
+199 199
+l {'Lbs-': 2254.0, 'Acc+': 16.0, 'Mpg+': 30.0, 'N': 199}
+r {'Lbs-': 3605.0, 'Acc+': 14.5, 'Mpg+': 20.0, 'N': 199}
+✅ pass: half
+[398]{'Lbs-': 2807.0, 'Acc+': 15.5, 'Mpg+': 20.0, 'N': 398}
+|.. [199]
+|.. |.. [99]
+|.. |.. |.. [49]
+|.. |.. |.. |.. [24]{'Lbs-': 3211.0, 'Acc+': 16.5, 'Mpg+': 20.0, 'N': 24}
+|.. |.. |.. |.. [25]{'Lbs-': 2408.0, 'Acc+': 16.0, 'Mpg+': 20.0, 'N': 25}
+|.. |.. |.. [50]
+|.. |.. |.. |.. [25]{'Lbs-': 3380.0, 'Acc+': 16.6, 'Mpg+': 20.0, 'N': 25}
+|.. |.. |.. |.. [25]{'Lbs-': 3155.0, 'Acc+': 16.7, 'Mpg+': 20.0, 'N': 25}
+|.. |.. [100]
+|.. |.. |.. [50]
+|.. |.. |.. |.. [25]{'Lbs-': 4464.0, 'Acc+': 11.5, 'Mpg+': 10.0, 'N': 25}
+|.. |.. |.. |.. [25]{'Lbs-': 4098.0, 'Acc+': 13.0, 'Mpg+': 10.0, 'N': 25}
+|.. |.. |.. [50]
+|.. |.. |.. |.. [25]{'Lbs-': 4054.0, 'Acc+': 13.2, 'Mpg+': 20.0, 'N': 25}
+|.. |.. |.. |.. [25]{'Lbs-': 4100.0, 'Acc+': 13.5, 'Mpg+': 10.0, 'N': 25}
+|.. [199]
+|.. |.. [99]
+|.. |.. |.. [49]
+|.. |.. |.. |.. [24]{'Lbs-': 2246.0, 'Acc+': 15.5, 'Mpg+': 30.0, 'N': 24}
+|.. |.. |.. |.. [25]{'Lbs-': 2234.0, 'Acc+': 15.5, 'Mpg+': 30.0, 'N': 25}
+|.. |.. |.. [50]
+|.. |.. |.. |.. [25]{'Lbs-': 2575.0, 'Acc+': 16.4, 'Mpg+': 30.0, 'N': 25}
+|.. |.. |.. |.. [25]{'Lbs-': 2335.0, 'Acc+': 15.8, 'Mpg+': 30.0, 'N': 25}
+|.. |.. [100]
+|.. |.. |.. [50]
+|.. |.. |.. |.. [25]{'Lbs-': 2019.0, 'Acc+': 16.6, 'Mpg+': 40.0, 'N': 25}
+|.. |.. |.. |.. [25]{'Lbs-': 2045.0, 'Acc+': 17.0, 'Mpg+': 30.0, 'N': 25}
+|.. |.. |.. [50]
+|.. |.. |.. |.. [25]{'Lbs-': 2255.0, 'Acc+': 15.5, 'Mpg+': 30.0, 'N': 25}
+|.. |.. |.. |.. [25]{'Lbs-': 2542.0, 'Acc+': 14.9, 'Mpg+': 20.0, 'N': 25}
+✅ pass: tree
+
+all  {'Lbs-': 2807.0, 'Acc+': 15.5, 'Mpg+': 20.0, 'N': 398}
+     {'Lbs-': 889, 'Acc+': 3, 'Mpg+': 8, 'N': 398}
+
+best {'Lbs-': 2188.0, 'Acc+': 17.3, 'Mpg+': 40.0, 'N': 12}
+     {'Lbs-': 510, 'Acc+': 3, 'Mpg+': 4, 'N': 12}
+
+rest {'Lbs-': 2678.0, 'Acc+': 15.7, 'Mpg+': 20.0, 'N': 48}
+     {'Lbs-': 708, 'Acc+': 2, 'Mpg+': 4, 'N': 48}
+
+all ~= best? [(True, 'Lbs-'), (True, 'Acc+'), (True, 'Mpg+')]
+best ~= rest? [(True, 'Lbs-'), (True, 'Acc+'), (True, 'Mpg+')]
+✅ pass: Sway
+all    {best= 12, rest= 48}
+
+Clndrs -inf 4.0 1 defaultdict(<class 'int'>, {'best': 12, 'rest': 25})
+Clndrs 4.0 inf 0 defaultdict(<class 'int'>, {'rest': 23})
+
+Volume -inf 90.0 0 defaultdict(<class 'int'>, {'best': 2, 'rest': 8})
+Volume 90.0 116.0 0 defaultdict(<class 'int'>, {'best': 6, 'rest': 7})
+Volume 116.0 140.0 0 defaultdict(<class 'int'>, {'best': 4, 'rest': 8})
+Volume 140.0 inf 0 defaultdict(<class 'int'>, {'rest': 25})
+
+Model -inf 70.0 0 defaultdict(<class 'int'>, {'rest': 7})
+Model 70.0 71.0 0 defaultdict(<class 'int'>, {'best': 1, 'rest': 3})
+Model 71.0 73.0 1 defaultdict(<class 'int'>, {'best': 11, 'rest': 11})
+Model 73.0 inf 0 defaultdict(<class 'int'>, {'rest': 27})
+
+origin 1.0 1.0 0 defaultdict(<class 'int'>, {'rest': 35})
+origin 2.0 2.0 1 defaultdict(<class 'int'>, {'best': 12, 'rest': 4})
+origin 3.0 3.0 0 defaultdict(<class 'int'>, {'rest': 9})
+✅ pass: bins
+
+Clndrs -inf 3.0
+Clndrs 3.0 4.0
+Clndrs 4.0 inf
+
+Volume -inf 86.0
+Volume 86.0 116.0
+Volume 116.0 inf
+
+Model -inf 79.0
+Model 79.0 81.0
+Model 81.0 inf
+
+origin 1.0 1.0
+origin 2.0 2.0
+origin 3.0 3.0
+
+Clndrs 3.0 4.0 0.61 defaultdict(<class 'int'>, {'best': 12, 'rest': 25})
+Model 79.0 81.0 0.55 defaultdict(<class 'int'>, {'best': 8, 'rest': 4})
+origin 3.0 3.0 0.53 defaultdict(<class 'int'>, {'best': 9, 'rest': 11})
+Volume 86.0 116.0 0.41 defaultdict(<class 'int'>, {'best': 8, 'rest': 16})
+Volume -inf 86.0 0.33 defaultdict(<class 'int'>, {'best': 5, 'rest': 3})
+Model 81.0 inf 0.32 defaultdict(<class 'int'>, {'best': 5, 'rest': 4})
+origin 1.0 1.0 0.1 defaultdict(<class 'int'>, {'best': 4, 'rest': 31})
+Clndrs -inf 3.0 0.08 defaultdict(<class 'int'>, {'best': 1})
+Clndrs 4.0 inf 0.0 defaultdict(<class 'int'>, {'rest': 27})
+Volume 116.0 inf 0.0 defaultdict(<class 'int'>, {'rest': 33})
+Model -inf 79.0 0.0 defaultdict(<class 'int'>, {'rest': 44})
+origin 2.0 2.0 0.0 defaultdict(<class 'int'>, {'rest': 10})
+ranges [{'lo': 3.0, 'hi': 4.0, 'at': 0}]
+Map: <map object at 0x000001B8DC33CCA0>
+
+-----------
+explain= {'Clndrs': [[3.0, 4.0]]}
+all         {'Lbs-': 2807.0, 'Acc+': 15.5, 'Mpg+': 20.0, 'N': 398} {'Lbs-': 889, 'Acc+': 3, 'Mpg+': 8, 'N': 398}
+sway with   10 evals {'Lbs-': 1975.0, 'Acc+': 16.2, 'Mpg+': 40.0, 'N': 13} {'Lbs-': 240, 'Acc+': 2, 'Mpg+': 4, 'N': 13}
+xpln on     10 evals {'Lbs-': 2420.0, 'Acc+': 13.5, 'Mpg+': 20.0, 'N': 4} {'Lbs-': 231, 'Acc+': 0, 'Mpg+': 0, 'N': 4}
+sort with 398 evals {'Lbs-': 4732.0, 'Acc+': 12.0, 'Mpg+': 10.0, 'N': 13} {'Lbs-': 222, 'Acc+': 1, 'Mpg+': 0, 'N': 13}
+✅ pass: xpln
