@@ -1,60 +1,39 @@
 from LIB import LIB
 from COLS import COLS
-from ROW import ROW
-from UPDATE import UPDATE
+import UPDATE
 import config
 from NUM import NUM
-update = UPDATE()
+
 num = NUM()
-row = ROW
 lib = LIB()
 class DATA:
-    def __init__(self, src = None, rows=None):
-        rows = {}
-        cols = []
-        add = lambda x: update.row(self,x)
+    def __init__(self, src, rows=None):
         self.rows = []
-        self.cols = cols
-        if type(src) == str:
-            lib.csv(src, add)
-
-        elif src:
-            self.cols = COLS(src.cols.names)
-            if rows:
-                for row in rows:
-                    add(row)
+        self.cols = None
+        add = lambda x: UPDATE.row(self,x)
+        if isinstance(src, str):
+                lib.csv(src, add)
+        else:
+                self.cols = COLS(src.cols.names)
+                if rows:
+                    for row in rows:
+                        add(row)
         
 
     def new(self):
         return {"rows": [], "cols": None}
 
-
-    # def add(self,row):
-    #     for t in COLS.x, COLS.y:
-    #         for col in t:
-    #             col.add(row.cells[col.at])
-
-    def clone(self,data, ts):
-        data1 = update.row(DATA(), data.cols.names)
-        for t in (ts or []):
-            update.row(data1, t)
-        return data1
+    # def clone(self,data, ts = None):
+    #     data1 = UPDATE.row(DATA(), data.cols.names)
+    #     for t in (ts or []):
+    #         UPDATE.row(data1, t)
+    #     return data1
     
     def read(self,sfile,data = None):
         data = DATA()
-        callback = lambda t: update.row(data, t)
+        callback = lambda t: UPDATE.row(data, t)
         lib.csv(sfile, callback)
         return data
-
-    # def row(self, data, t):
-    #     if data.cols:
-    #         data.rows.append(t)
-    #         for cols in [data.cols.x, data.cols.y]:
-    #             for col in (cols): 
-    #                 update.add(col.col, t[col.col.at]) 
-    #     else: 
-    #         data.cols = COLS(t)  
-    #     return data
 
     def dist(self, data, t1, t2, cols = None):
     
@@ -80,6 +59,7 @@ class DATA:
 
         d, n = 0, 1 / float("inf")
         cols = cols or data.cols.x
+        
         for col in cols:
             n += 1
             d += dist1(col.col, t1[col.col.at], t2[col.col.at]) ** config.the['p']
@@ -134,8 +114,6 @@ class DATA:
         rows = rows or data.rows
         here = {"data" : DATA(data, rows)}
         left, right, A, B, _,_= self.half(data, rows, cols, above)
-        # print("l", lib.stats(left))
-        # print("r", lib.stats(right))
         if len(rows)>=2*(len(data.rows) ** config.the['min']):
             left, right, A, B, _,_= self.half(data, rows, cols, above)
             here["left"] = self.tree(data, left, cols, A)
@@ -143,12 +121,11 @@ class DATA:
         return here
     
     def showTree(self,tree,lvl=0):
-        #print("lem",len(tree["data"].rows))
         if tree:
-            print("len:{}[{}]".format("|.. " * lvl, len(tree["data"].rows)), end="")
+            print("{}[{}]".format("|.. " * lvl, len(tree["data"].rows)), end="")
             if lvl == 0 or not "left" in tree:
                 print(lib.stats(tree["data"]))
             else:
-                print("else")
-                self.showTree(tree["left"] if "left" in tree else None, lvl + 1)
-                self.showTree(tree["right"] if "right" in tree else None, lvl + 1)
+                print("")
+            self.showTree(tree["left"] if "left" in tree else None, lvl + 1)
+            self.showTree(tree["right"] if "right" in tree else None, lvl + 1)
