@@ -21,7 +21,6 @@ class DATA:
 
     def read(self, sFile):
         data = DATA()
-
         def fun(t):
             update.row(data, t)
         lib.csv(sFile, fun)
@@ -42,21 +41,30 @@ class DATA:
                 return 1
             if hasattr(col, "isSym"):
                 return 0 if x == y else 1
-            else:
-                x, y = num.norm( x), num.norm( y)
+            else:                
                 if x == "?":
+                    y = float(y)
                     x = 1 if y < 0.5 else 1
-                if y == "?":
-                    y = 1 if x < 0.5 else 1
+                elif y == "?":
+                    x = float(x)
+                    y = 1 if x < 0.5 else 1 
+                
+                else:
+                    x = float(x)
+                    y = float(y)
+                    x, y = num.norm(col,x), num.norm(col,y)
                 return abs(x - y)
 
         d, n = 0, 1 / float("inf")
-        cols = cols or data.cols.x
+        # print("data", data)
+        cols = cols if cols else data.cols.x
+        # print("t2", t2)
         for col in cols:
-            n += 1
-            d += dist1(col, t1[col.col.at], t2[col.col.at]) ** config.the['p']
-        return (d / n)**(1 / config.the['p'])
 
+            n += 1
+            d += dist1(col.col, t1[col.col.at], t2[col.col.at]) ** config.the['p']
+            
+        return (d / n)**(1 / config.the['p'])
 
     def around(self,row1,rows=None,cols=None):
 
@@ -70,7 +78,6 @@ class DATA:
             return {'row': row2, 'dist':self.dist(row1,row2,cols)}
 
         return sorted(list(map(fun, rows)), key=lambda x: x['dist'])
-
 
     def half(self, data, rows=None, cols=None, above=None):
         left, right = [], []
@@ -86,11 +93,10 @@ class DATA:
 
         rows = rows or self.rows
         some = lib.many(rows, config.the["Halves"])
-        A = above if config.the["Reuse"] else any(some)
-        def fun(r):
-            return [{'row': r, "d":gap(r, A)}]
-        tmp  = sorted( map(fun, some), key=lambda x: x["d"])
-        far = tmp[(len(tmp)) * config.the["Far"]]
+        A = above if above else lib.any(some)
+
+        tmp = sorted([{"row": r, "d": gap(r, A)} for r in some], key=lambda x: x["d"])
+        far = tmp[int((len(tmp)) * config.the["Far"])]
         B, c = far["row"], far["d"]
 
         for n, two in enumerate(sorted(map(proj, rows), key=lambda x: x["x"])):
@@ -98,8 +104,7 @@ class DATA:
                 left.append(two["row"])
             else:
                 right.append(two["row"])
-
-        return left, right, A, B, c
+        return left, right, A, B,c
 
     def cluster(self, rows=None,cols=None, above=None):
 
@@ -138,4 +143,14 @@ class DATA:
             here["right"] = self.tree(right, cols, B)
         return here
     
+    def showTree(self, tree, lvl=0):
+        #print("lem",len(tree["data"].rows))
+        if tree:
+            print("len:{}[{}]".format("|.. " * lvl, len(tree["data"].rows)), end="")
+            if lvl == 0 or not "left" in tree:
+                print(lib.stats(tree["data"]))
+            else:
+                print("else")
+                self.showTree(tree["left"] if "left" in tree else None, lvl + 1)
+                self.showTree(tree["right"] if "right" in tree else None, lvl + 1)
   
