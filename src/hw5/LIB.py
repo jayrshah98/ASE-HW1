@@ -64,6 +64,7 @@ class LIB:
             for s1 in re.findall("([^,]+)", line):
                 t.append(self.coerce(s1))
             fun(t)
+            
     
     def kap(self, t, fun):
         u = {}
@@ -142,7 +143,7 @@ class LIB:
         else:
             return (self.per(self.has(col),.9) - self.per(self.has(col), .1)) /2.58
 
-    def stats(self, data, nPlaces, fun = None, cols = None):
+    def stats(self, data, nPlaces = 2, fun = None, cols = None):
         cols = cols if cols else data.cols.y
 
         def fun(col):

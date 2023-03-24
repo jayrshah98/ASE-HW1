@@ -12,6 +12,5 @@ class NUM:
         self.has= []
         self.w = -1 if self.txt.endswith("-") else 1
     
-    def norm(self,n):
-        return n if n == "?" else (n - self.lo) / (self.hi - self.lo + 1 / float("inf"))
-        
+    def norm(self,num,n):
+        return n if n == "?" else (n - num.lo) / (num.hi - num.lo + 1 / float("inf"))
