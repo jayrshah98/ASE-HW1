@@ -7,6 +7,8 @@ from pathlib import Path
 import config
 import csv
 from COLS import COLS
+from NUM import NUM
+
 
 lo = float('inf') 
 hi = float('-inf')
@@ -60,24 +62,6 @@ class LIB:
             v, k = fun(k, v)
             u[k or len(u)+1] = v
         return u
-
-    def settings(self,s):
-        t={}
-        res = re.findall("\n[\s]+[-][\S]+[\s]+[-][-]([\S]+)[^\n]+= ([\S]+)", s)
-        for k,v in res:
-             t[k] = self.coerce(v)
-        return t
-    
-    def cli(self,options):
-        for k,v in options.items():
-            v = str(v)
-            for n, x in enumerate(sys.argv):
-                if x== "-" + k[0] or x == "--" + k:
-                  v = (sys.argv[n + 1] if n + 1 < len(
-                        sys.argv) else False) or v == "False" and "true" or v == "True" and "false"
-                options[k] = self.coerce(v)
-        return options
-
 
     def show(self,node,what=None,cols=None,nPlaces=None,lvl=0):
         if node:
@@ -189,3 +173,34 @@ class LIB:
                 if x < y: lt = lt + 1
 
         return abs(lt - gt)/n > .147
+    
+    def better(self,data, row1, row2):
+
+        s1, s2, ys = 0, 0, data.cols.y
+        for col in ys:
+            n1 =  float(row1[col.col.at]) if row1[col.col.at] != "?" else row1[col.col.at]
+            n2 = float(row2[col.col.at]) if row2[col.col.at] != "?" else row2[col.col.at]
+            x = NUM.norm(NUM,col.col, n1)
+            y = NUM.norm(NUM,col.col, n2)
+
+            s1 -= math.exp(col.col.w * (x-y)/len(ys))
+            s2 -= math.exp(col.col.w * (y - x)/len(ys))
+
+        return s1/len(ys) < s2 / len(ys)
+    
+
+    def diffs(self,nums1, nums2):
+        def kap(nums, fun):
+            return [fun(k, v) for k, v in enumerate(nums)]
+        return kap(nums1, lambda k, nums: (self.cliffsDelta(nums.col.has, nums2[k].col.has), nums.col.txt))
+    
+
+    def value(self,has, nB = 1, nR = 1, sGoal = True,b=0,r=0):
+        b,r = 0,0
+        for x, n in has.items():
+            if x == sGoal:
+                b += n
+            else:
+                r += n
+        b,r = b/(nB+1/float("inf")), r/(nR+1/float("inf"))
+        return (b ** 2) / (b + r)

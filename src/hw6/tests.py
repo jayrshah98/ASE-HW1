@@ -4,6 +4,8 @@ from NUM import NUM
 from SYM import SYM
 from DATA import DATA
 from UPDATE import *
+import OPTIMIZATION
+import DISCRETIZATION as discretization
 lib = LIB()
 num = NUM()
 rint = lib.rint
@@ -120,3 +122,32 @@ def half_test():
 def tree_test():
     data = DATA(config.the['file'])
     data.showTree(data.tree(data))
+
+def sway_test():
+    data = DATA(config.the['file'])
+    best,rest,_ = OPTIMIZATION.sway(data)
+    print("\nall ", lib.stats(data))
+    print("    ",   lib.stats(data,None, lib.div))
+    print("\nbest", lib.stats(best))
+    print("    ",   lib.stats(best,None, lib.div))
+    print("\nrest", lib.stats(rest))
+    print("    ",   lib.stats(rest,None, lib.div))
+    print("\nall ~= best?", lib.diffs(best.cols.y, data.cols.y))
+    print("best ~= rest?", lib.diffs(best.cols.y, rest.cols.y))
+
+def bins_test():
+    data = DATA(config.the['file'])
+    best,rest,_ = OPTIMIZATION.sway(data)
+    b4 = None
+    print("all","","","", "{best= " + str(len(best.rows)) + ", rest= " + str(len(rest.rows)) + "}")
+    result = discretization.bins(data.cols.x, {"best": best.rows, "rest": rest.rows})
+    for t in result:
+        for range in t:
+            if range.txt != b4: 
+                print("")
+            b4 = range.txt
+            print(range.txt,
+                  range.lo,
+                  range.hi,
+                  round(lib.value(range.y.has, len(best.rows), len(rest.rows), "best")),
+                  range.y.has)

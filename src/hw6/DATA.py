@@ -22,12 +22,6 @@ class DATA:
 
     def new(self):
         return {"rows": [], "cols": None}
-
-    # def clone(self,data, ts = None):
-    #     data1 = UPDATE.row(DATA(), data.cols.names)
-    #     for t in (ts or []):
-    #         UPDATE.row(data1, t)
-    #     return data1
     
     def read(self,sfile,data = None):
         data = DATA()
