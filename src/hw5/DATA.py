@@ -27,7 +27,7 @@ class DATA:
         return data
 
     def clone(self, data, ts = None):
-
+        
         d = DATA()
         data1 = update.row(d, data.cols.names)
         for _, t in enumerate(ts or []):
@@ -56,9 +56,8 @@ class DATA:
                 return abs(x - y)
 
         d, n = 0, 1 / float("inf")
-        # print("data", data)
         cols = cols if cols else data.cols.x
-        # print("t2", t2)
+
         for col in cols:
 
             n += 1
@@ -80,6 +79,7 @@ class DATA:
         return sorted(list(map(fun, rows)), key=lambda x: x['dist'])
 
     def half(self, data, rows=None, cols=None, above=None):
+       
         left, right = [], []
 
         def gap(r1, r2):
@@ -94,7 +94,6 @@ class DATA:
         rows = rows or self.rows
         some = lib.many(rows, config.the["Halves"])
         A = above if above else lib.any(some)
-
         tmp = sorted([{"row": r, "d": gap(r, A)} for r in some], key=lambda x: x["d"])
         far = tmp[int((len(tmp)) * config.the["Far"])]
         B, c = far["row"], far["d"]
@@ -104,8 +103,10 @@ class DATA:
                 left.append(two["row"])
             else:
                 right.append(two["row"])
-        return left, right, A, B,c
+        
+        return left, right, A, B, c
 
+        
     def cluster(self, rows=None,cols=None, above=None):
 
         if rows == None:
@@ -121,36 +122,73 @@ class DATA:
             node["left"]  = self.cluster(left,cols, node["A"])
             node["right"] = self.cluster(right,cols, node["B"])
         return node 
-
-
-    def better(self,row1,row2,s1,s2,ys,x,y):
-        s1,s2,ys,x,y = 0,0,self.cols.y
-
-        for _,col in enumerate(ys):
-            x  = col.norm( row1.cells[col.at] )
-            y  = col.norm( row2.cells[col.at] )
-            s1 = s1 - math.exp(col.w * (x-y) / len(ys))
-            s2 = s2 - math.exp(col.w * (y-x) / len(ys))
-        return s1/len(ys) < s2/len(ys)
-
-    def tree(self, rows=None, cols=None, above=None, here = None):
-        rows = rows if rows else self.rows
-        here = {"data": self.clone(self, rows)}
-
-        if (len(rows)) >= 2 * ((len(self.rows)) ** config.the['min']):
-            left, right, A, B = self.half(rows, cols, above)
-            here["left"] = self.tree(left, cols, A)
-            here["right"] = self.tree(right, cols, B)
-        return here
     
+
+    # def better(self, data, row1, row2):
+
+    #     s1, s2, ys = 0, 0, data.cols.y
+    #     print("ys", ys)
+    #     for col in ys:
+    #         n1 =  float(row1[col.col.at]) if row1[col.col.at] != "?" else row1[col.col.at]
+    #         n2 = float(row2[col.col.at]) if row2[col.col.at] != "?" else row2[col.col.at]
+    #         x = lib.norm(NUM,col.col, n1)
+    #         y = lib.norm(NUM,col.col, n2)
+
+    #         s1 -= math.exp(col.col.w * (x-y)/len(ys))
+    #         s2 -= math.exp(col.col.w * (y - x)/len(ys))
+
+    #     return s1/len(ys) < s2 / len(ys)
+
+
+    def tree(self, data, rows = None, cols = None, above = None):
+        rows = rows if rows else data.rows
+        here = {"data" : data.clone(data, rows)}
+        if len(rows) >= 2 * (len(data.rows) ** config.the['min']):
+            left, right, A, B, _ = self.half(data, rows, cols, above)
+            here["left"] = self.tree(data, left, cols, A)
+            here["right"] = self.tree(data, right, cols, B)
+        return here
+
     def showTree(self, tree, lvl=0):
-        #print("lem",len(tree["data"].rows))
         if tree:
-            print("len:{}[{}]".format("|.. " * lvl, len(tree["data"].rows)), end="")
+            print("{}[{}] ".format(("|.. ") * lvl, len(tree['data'].rows)), end="")
             if lvl == 0 or not "left" in tree:
                 print(lib.stats(tree["data"]))
             else:
-                print("else")
-                self.showTree(tree["left"] if "left" in tree else None, lvl + 1)
-                self.showTree(tree["right"] if "right" in tree else None, lvl + 1)
-  
+                print("")
+            self.showTree(tree["left"] if "left" in tree else None, lvl + 1)
+            self.showTree(tree["right"] if "right" in tree else None, lvl + 1)
+
+ 
+    def better(self,data, row1, row2, s1=0, s2=0, ys=None, x=0, y=0):
+
+        s1, s2, ys = 0, 0, data.cols.y
+        for col in ys:
+            n1 =  float(row1[col.col.at]) if row1[col.col.at] != "?" else row1[col.col.at]
+            n2 = float(row2[col.col.at]) if row2[col.col.at] != "?" else row2[col.col.at]
+            x = NUM.norm(NUM,col.col, n1)
+            y = NUM.norm(NUM,col.col, n2)
+
+            s1 -= math.exp(col.col.w * (x-y)/len(ys))
+            s2 -= math.exp(col.col.w * (y - x)/len(ys))
+
+        return s1/len(ys) < s2 / len(ys)
+
+    def sway(self, data, cols = None):
+
+        def worker(rows, worse, above=None):
+            if len(rows) <= len(data.rows) ** config.the["min"]:
+                return rows, lib.many(worse, config.the['rest'] * len(rows))
+            else:
+                l, r, A, B, _ = self.half(data, rows, cols, above)
+
+                if self.better(data, B, A):
+                    l, r, A, B = r, l, B, A
+
+                for x in r:
+                    worse.append(x)
+                return worker(l, worse, A)
+
+        best, rest = worker(data.rows, [])
+
+        return self.clone(data, best), self.clone(data, rest)

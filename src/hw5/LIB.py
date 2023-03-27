@@ -65,12 +65,20 @@ class LIB:
                 t.append(self.coerce(s1))
             fun(t)
             
-    
+    def norm(self, num, n):
+        return n if n == "?" else (n - num.lo) / (num.hi - num.lo + 1 / float("inf"))
+
     def kap(self, t, fun):
         u = {}
-        for k, v in enumerate(t):
-            v, k = fun(k, v)
-            u[k or len(u)+1] = v
+
+        if isinstance(t, list):
+            items = enumerate(t)
+        else:
+            items = t.items()
+
+        for k, v in items:
+                v, k = fun(k, v)
+                u[k or len(u)+1] = v
         return u
 
     def any(self, t):
@@ -100,7 +108,6 @@ class LIB:
                 options[k] = self.coerce(v)
         return options
 
-    
     def last(self,t):
         return t[-1]
 
@@ -144,14 +151,14 @@ class LIB:
             return (self.per(self.has(col),.9) - self.per(self.has(col), .1)) /2.58
 
     def stats(self, data, nPlaces = 2, fun = None, cols = None):
-        cols = cols if cols else data.cols.y
-
-        def fun(col):
-            return self.rnd((fun if fun else self.mid)(col), nPlaces), col.txt
-
-        tmp = self.kap(cols, fun)
+        cols = cols or data.cols.y
+        
+        def callBack(k, col):
+            col = col.col
+            return round((fun or self.mid)(col), nPlaces), col.txt.rstrip('\n')
+        tmp = self.kap(cols, callBack)
         tmp["N"] = len(data.rows)
-        return tmp, map(self.mid, cols)
+        return tmp
     
     def settings(self,s):
         t={}
@@ -197,9 +204,22 @@ class LIB:
                 if x > y: gt = gt + 1 
                 if x < y: lt = lt + 1
 
-        return abs(lt - gt)/n > .147 
+        return abs(lt - gt)/n > .147
 
-    def diffs(self, nums1, nums2, the):
-        def func(k, nums):
-            return self.cliffsDelta(nums.has(), nums2[k].has()), nums.txt
-        return self.kap(nums1, func)
+    def diffs(self,nums1, nums2):
+        def kap(nums, fun):
+            return [fun(k, v) for k, v in enumerate(nums)]
+        return kap(nums1, lambda k, nums: (self.cliffsDelta(nums.col.has, nums2[k].col.has), nums.col.txt))
+    
+    def value(self, has, n_b = 1, n_r = 1, s_goal = True, b=0, r=0):
+
+        b,r = 0,0
+
+        for x, n in has.items():
+            if x == s_goal:
+                b += n
+            else:
+                r += n
+
+        b,r = b/(n_b+1/float("inf")), r/(n_r+1/float("inf"))
+        return (b ** 2) / (b + r)

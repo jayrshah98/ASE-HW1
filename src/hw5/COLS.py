@@ -1,22 +1,21 @@
-from NUM import NUM
-from SYM import SYM
 from COL import COL
 
 class COLS:
     
-    def __init__(self, ss):
-        self.names = ss
+    def __init__(self, t):
+        self.names = t
         self.all = []
         self.x = []
         self.y = []
 
-        for n,s in enumerate(ss):
+        for n,s in enumerate(t):
             col = COL(n, s)
             self.all.append(col)
-
             if not col.isIgnored:
-                if hasattr(col, 'isKlass'):
+                if hasattr(col, 'isKlass') and col.isKlass:
                     self.klass = col
-                
-                self.y.append(col) if col.isGoal else self.x.append(col)
+                if(col.isGoal):
+                    self.y.append(col)
+                else:
+                    self.x.append(col)
                     

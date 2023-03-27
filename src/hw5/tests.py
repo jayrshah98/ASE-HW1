@@ -4,11 +4,11 @@ from DATA import DATA
 from LIB import LIB
 import config
 from UPDATE import UPDATE
+from discretization import *
 
 lib = LIB()
 data = DATA()
 update = UPDATE()
-# sym = SYM()
 num = NUM()
 rint = lib.rint
 seed_set = lib.seed_set
@@ -16,7 +16,9 @@ add = update.add
 mid = lib.mid
 div = lib.div
 oo = lib.oo
-def the_test():
+
+
+def test_the():
     print(str(config.the))
 
 
@@ -24,15 +26,16 @@ def test_rand():
    
     seed_set(1)
     t = []
-    for i in range(1, 1000 + 1):
+    for _ in range(1, 1000 + 1):
         t.append(rint(100))
     seed_set(1)
     u = []
-    for i in range(1, 1000 + 1):
+    for _ in range(1, 1000 + 1):
         u.append(rint(100))
 
     for k, v in enumerate(t):
         assert v == u[k]
+
 
 def test_some():
     config.the["Max"] = 32
@@ -41,29 +44,24 @@ def test_some():
         add(num1,i)
     print(lib.has(num1))
 
-
-
-
-def sym_test():
+def test_sym():
    
     sym = update.adds(SYM(), ["a","a","a","a","b","b","c"])
     print (lib.mid(sym), lib.rnd(lib.div(sym)), 2)
     return 1.38 == lib.rnd(lib.div(sym), 2)
 
-def num_test():
-    
-    num1, num2 = NUM(), NUM()
-
+def test_num():
+    num1 , num2 = NUM(), NUM()
     for i in range(10000):
         add(num1, lib.rand())
     for i in range(10000):
-        add(num2, lib.rand() ** 2)
+        add(num2, lib.rand()**2)
+    print(1, lib.rnd(mid(num1),2), lib.rnd(lib.div(num1), 2))
+    print(2, lib.rnd(mid(num2),2), lib.rnd(lib.div(num2), 2))
 
-    print(1, lib.rnd(lib.mid(num1), 1), lib.rnd(lib.div(num1), 1))
-    print(2, lib.rnd(lib.mid(num2), 1), lib.rnd(lib.div(num2), 1))
-    return .5 == lib.rnd(lib.mid(num1), 1) and lib.mid(num1) > lib.mid(num2)
+    return 0.5 == lib.rnd(mid(num1),1) and mid(num1) > mid(num2)
 
-def csv_test():
+def test_csv():
     global n
     n = 0
     def fun(t):
@@ -72,7 +70,7 @@ def csv_test():
     lib.csv(config.the['file'], fun) 
     return 3192 == n
 
-def data_test():
+def test_data():
     d = DATA()
     data = d.read(config.the['file'])
     col = data.cols.x[1].col
@@ -128,11 +126,40 @@ def test_half():
     print(len(left), len(right))
 
     l, r = data.clone(data, left), data.clone(data, right)
+   
     print("l", lib.stats(l))
     print("r", lib.stats(r))
 
 def test_tree():
+    data.showTree(data.tree(data.read(config.the['file'])))
+
+def test_sway():
     d = DATA()
     data = d.read(config.the['file'])
-    data.showTree(data.tree())
+    best, rest = data.sway(data)
+    print("\nall ", lib.stats(data))
+    print("    ",   lib.stats(data,None, lib.div))
+    print("\nbest", lib.stats(best))
+    print("    ",   lib.stats(best,None, lib.div))
+    print("\nrest", lib.stats(rest))
+    print("    ",   lib.stats(rest,None, lib.div))
+    print("\nall ~= best?", lib.diffs(best.cols.y, data.cols.y))
+    print("best ~= rest?", lib.diffs(best.cols.y, rest.cols.y))
 
+def test_bins():
+    d = DATA()
+    data = d.read(config.the['file'])
+    best,rest = data.sway(data)
+    b4 = None
+    print("all","","","", "{best= " + str(len(best.rows)) + ", rest= " + str(len(rest.rows)) + "}")
+    result = bins(data.cols.x, {"best": best.rows, "rest": rest.rows})
+    for t in result:
+        for range in t:
+            if range.txt != b4: 
+                print("")
+            b4 = range.txt
+            print(range.txt,
+                  range.lo,
+                  range.hi,
+                  round(lib.value(range.y.has, len(best.rows), len(rest.rows), "best")),
+                  range.y.has)

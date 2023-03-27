@@ -55,3 +55,8 @@ class UPDATE:
         else: 
             data.cols = COLS(t)  
         return data
+    
+    def extend(self, range, n, s):
+        range.lo = min(n, range.lo)
+        range.hi = max(n, range.hi)
+        self.add(range.y, s)
