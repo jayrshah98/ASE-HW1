@@ -28,6 +28,8 @@ eg("basic", "demo of basic", basic_test)
 eg("pre", "demo of pre", pre_test)
 eg("five", "demo for five", five_test)
 eg("six", "demo for six", six_test)
+eg("tiles", "demo for tiles", tiles_test)
+eg("sk", "demo for sk", sk_test)
 
 if __name__ == "__main__":
     main(egs)

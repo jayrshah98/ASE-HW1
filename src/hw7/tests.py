@@ -13,6 +13,7 @@ bootstrap = lib.bootstrap
 RX = lib.RX
 scottKnot = lib.scottKnot
 tiles = lib.tiles
+mid = lib.mid
 
 def ok_test():
      print(random.seed(1))
@@ -89,3 +90,59 @@ def six_test():
     tiles_sk = tiles(sk)
     for rx in tiles_sk:
         print(rx["name"], rx["rank"], rx["show"])
+
+
+def tiles_test():
+    rxs,a,b,c,d,e,f,g,h,j,k=[],[],[],[],[],[],[],[],[],[],[]
+    for i in range(1000):
+        a.append(gaussian(10,1))
+    for i in range(1000):
+        b.append(gaussian(10.1,1))
+    for i in range(1000):
+        c.append(gaussian(20,1))
+    for i in range(1000):
+        d.append(gaussian(30,1))
+    for i in range(1000):
+        e.append(gaussian(30.1,1))
+    for i in range(1000):
+        f.append(gaussian(10,1))
+    for i in range(1000):
+        g.append(gaussian(10,1))
+    for i in range(1000):
+        h.append(gaussian(40,1))
+    for i in range(1000):
+        j.append(gaussian(40,3))
+    for i in range(1000):
+        k.append(gaussian(10,1))
+    for u, v in enumerate([a, b, c, d, e, f, g, h, j, k]):
+        rxs.append(RX(v, "rx" + str(u)))
+    rxs.sort(key=lambda a: mid(a))
+    for rx in tiles(rxs):
+        print("",rx["name"],rx["show"])
+
+def sk_test():
+    rxs,a,b,c,d,e,f,g,h,j,k=[],[],[],[],[],[],[],[],[],[],[]
+    for i in range(1000):
+        a.append(gaussian(10,1))
+    for i in range(1000):
+        b.append(gaussian(10.1,1))
+    for i in range(1000):
+        c.append(gaussian(20,1))
+    for i in range(1000):
+        d.append(gaussian(30,1))
+    for i in range(1000):
+        e.append(gaussian(30.1,1))
+    for i in range(1000):
+        f.append(gaussian(10,1))
+    for i in range(1000):
+        g.append(gaussian(10,1))
+    for i in range(1000):
+        h.append(gaussian(40,1))
+    for i in range(1000):
+        j.append(gaussian(40,3))
+    for i in range(1000):
+        k.append(gaussian(10,1))
+    for u, v in enumerate([a, b, c, d, e, f, g, h, j, k]):
+        rxs.append(RX(v, "rx" + str(u)))
+    for rx in tiles(scottKnot(rxs)):
+        print("",rx["rank"],rx["name"],rx["show"])
